@@ -20,13 +20,13 @@
 </nav>
 
 <div class="content-container">
-    <p> Welcome to expresssite! user : <span class="user_displayname"><%= displayname %></span> </p>
-    <a href="/logout">logout</a>
-        <div id="wall">
-	    <label>Say:</label>
-	    <input id="wall_say" type="text" name="say"/><br/>
-            <input id="wall_post" type="submit" value="post">
-	        
+    <p> Welcome to expresssite! user : <span class="user_displayname"><%= displayname %></span> <a href="/logout">logout</a></p>
+    
+    <div id="wall">
+	<label>Say:</label>
+	<input id="wall_say" type="text" name="say"/>
+        <input id="wall_post" type="submit" value="post">
+	<br>        
         <%- html_wall_content %>
     </div>
 </div>
@@ -64,7 +64,7 @@
     // attach event for wall_post button
     document.getElementById('wall_post').addEventListener('click', function(){
 
-        send({name:document.getElementById('wall_say').value});
+        send({say:document.getElementById('wall_say').value});
 
     });
 

@@ -115,8 +115,17 @@ app.get('/', function(req,res){
 
             if(wallposts !== ''){
 
+                 // render posts
+
+                 var len = wallposts.length, i = len,html='';
+
+                 while(i--){
+                     html += '<p>'+JSON.parse(wallposts[i].json).say+'<\/p>'
+                     
+                 }
+
                  res.render('index', { displayname: user.displayName,
-                              html_wall_content: wallposts });
+                              html_wall_content: html });
 
             }else{
 
@@ -137,6 +146,7 @@ app.get('/', function(req,res){
 app.post('/', function(req,res){
 
     console.log('post from root');
+    console.log(req.get('wallpost'));
 
     wallpost.postToPage(req.user.name, ':username:'+req.user.name, 'say', req.get('wallpost'), function(){
 
