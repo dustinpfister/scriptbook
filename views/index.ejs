@@ -1,0 +1,71 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">&#60;%= scriptBook %&#62;</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/user">Settings</a></li>
+                <li><a href="/search">Search</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="content-container">
+    <p> Welcome to expresssite! user : <span class="user_displayname"><%= displayname %></span> </p>
+    <a href="/logout">logout</a>
+        <div id="wall">
+	    <label>Say:</label>
+	    <input id="wall_say" type="text" name="say"/><br/>
+            <input id="wall_post" type="submit" value="post">
+	        
+        <%- html_wall_content %>
+    </div>
+</div>
+
+<script>
+
+    // yes we will want to do this client side as well some time
+    var getPosts = function(){
+
+
+    }
+
+
+    // send a wall post
+    var send = function(data){
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '');
+        xhr.setRequestHeader('wallpost', JSON.stringify(data));
+
+        xhr.onreadystatechange = function(){
+
+            if(this.readyState === 4){
+
+                document.getElementById('query').innerHTML = this.response;
+                console.log(this.response);
+        
+            }
+
+        };
+
+        xhr.send();
+
+    };
+
+    // attach event for wall_post button
+    document.getElementById('wall_post').addEventListener('click', function(){
+
+        send({name:document.getElementById('wall_say').value});
+
+    });
+
+</script>
