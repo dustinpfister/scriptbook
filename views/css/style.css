@@ -10,3 +10,39 @@ body{
    padding: 25px;
 
 }
+
+
+
+/* INDEX VIEW CLASSES */
+
+#say_container{
+  
+  /*display:none;*/
+  
+}
+
+#quick_container{
+  
+  display: none;
+  
+}
+
+.quick_canvas{
+
+    background: #00ffff;
+
+}
+
+.quick_code{
+
+    display:none;
+
+}
+
+#quick_input{
+
+    font-size: 10px;
+    width: 320px;
+    height: 240px;
+
+}

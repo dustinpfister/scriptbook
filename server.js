@@ -14,8 +14,6 @@ siteWide = express.Router();
 
 // use passport local strategy
 // followinf example at : https://github.com/passport/express-4.x-local-example/blob/master/server.js
-
-
 passport.use(new Strategy(
   function(username, password, cb) {
     users.findByUsername(username, function(err, user) {
@@ -113,15 +111,30 @@ app.get('/', function(req,res){
         // do they have posts?
         wallpost.getPosts(req.user.name, function(wallposts){
 
+            var len,i,html,currentPost;
+
             if(wallposts !== ''){
 
                  // render posts
-
-                 var len = wallposts.length, i = len,html='';
+                 len = wallposts.length;
+                 i = len;
+                 html='';
 
                  while(i--){
-                     html += '<p>'+JSON.parse(wallposts[i].json).say+'<\/p>'
+
+                     currentPost = JSON.parse(wallposts[i].json);
+
+                     if(currentPost.say){
+
+                         html += '<p>'+currentPost.say+'<\/p>'
+
+                     }
+
+                     if(currentPost.quick){
+                         
+                         html += '<p>quick canvas: <span class=\"quick_code\">'+ currentPost.quick +'<\/span><\/p>'
                      
+                     }
                  }
 
                  res.render('index', { displayname: user.displayName,
@@ -146,15 +159,43 @@ app.get('/', function(req,res){
 app.post('/', function(req,res){
 
     console.log('post from root');
-    console.log(req.get('wallpost'));
 
-    wallpost.postToPage(req.user.name, ':username:'+req.user.name, 'say', req.get('wallpost'), function(){
+    var thePost = JSON.parse(req.get('wallpost'));
+    postType = 'none';
+
+    if(thePost.say){
+
+        postType = 'say';
+      
+    }
+
+
+    if(thePost.quick){
+
+        postType = 'quick';
+      
+    }
+
+    console.log('post type: ' + postType);
+
+    wallpost.postToPage(req.user.name, ':username:'+req.user.name, postType, req.get('wallpost'), function(status, post){
 
         console.log('something might have happened');
 
+        // if success send back the wallpost object
+        if(status === 'success'){
+
+            res.send(post);
+
+        // send null if not sucess
+        }else{
+
+            res.send(null);
+
+        }
     });
 
-    res.send(null);
+    //res.send(null);
 });
 
 // login namespace

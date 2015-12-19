@@ -20,17 +20,123 @@
 </nav>
 
 <div class="content-container">
-    <p> Welcome to expresssite! user : <span class="user_displayname"><%= displayname %></span> <a href="/logout">logout</a></p>
+    <p> Welcome to scriptBook! user : <span class="user_displayname"><%= displayname %></span> <a href="/logout">logout</a></p>
     
     <div id="wall">
+
+<form>
+            <input name="post_type" id="wall_radio_say" value="say" type="radio" checked>Say
+            <input name="post_type" id="wall_radio_quick_canvas" value="quick" type="radio">Quick Canvas
+        </form>
+        <div id="say_container">
+
+            <label>Say:</label>
+            <input id="say_input" type="text" name="say">
+            <input id="say_post" type="submit" value="post">
+
+        </div>
+
+        <div id="quick_container">
+            <textarea id="quick_input">
+
+(function(){
+
+    // basic Quick Canvas Template
+
+    var canvas = document.getElementById('quick_canvas'),
+    context = canvas.getContext('2d'),
+
+	// a box
+    box = {
+        x: 155,
+        y: 115,
+        w: 10,
+        h: 10
+    },
+	
+	// app state object
+    state = {
+
+        frame:0,
+        maxFrame: 60
+
+    },
+
+	// start will be called once before running main loop
+    start = function(){
+
+        loop();
+
+    },
+
+	// what to do on each frame tick
+    update = function(){
+
+        box.x = state.frame * ((canvas.width-20) / state.maxFrame) + 10;
+
+        state.frame++;
+
+        if(state.frame === state.maxFrame){
+            state.frame = 0;
+        }
+
+    },
+
+	// what to draw to canvas
+    draw = function(ctx){
+
+        // background
+        ctx.fillStyle='#000000';
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        // box
+        ctx.fillStyle='#ffffff';
+        ctx.fillRect(box.x,box.y,box.w,box.h);
+
+    },
+
+	// main app loop
+    loop = function(){
+
+        requestAnimationFrame(loop);
+
+        update();
+        draw(context);
+
+
+    };
+
+	// start it (click run button to start this demo)
+    start();
+    
+
+}());
+
+            </textarea>
+            <iframe id="quick_iframe" width="320" height="240"></iframe>
+            <br>
+            <input id="quick_run" type="button" value="run">
+            <input id="quick_kill" type="button" value="kill">
+            <input id="quick_post" type="submit" value="post">
+        </div>
+
+
+<!-- the old client system
+
 	<label>Say:</label>
 	<input id="wall_say" type="text" name="say"/>
         <input id="wall_post" type="submit" value="post">
-	<br>        
+	<br>       
+
+--> 
         <%- html_wall_content %>
     </div>
 </div>
 
+<!-- the post client system -->
+<script src="/js/post_client.js"></script>
+
+<!--
 <script>
 
     // yes we will want to do this client side as well some time
@@ -69,3 +175,4 @@
     });
 
 </script>
+-->
