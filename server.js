@@ -120,6 +120,7 @@ app.get('/', function(req,res){
                  i = len;
                  html='';
 
+                 // render all posts for now
                  while(i--){
 
                      currentPost = JSON.parse(wallposts[i].json);
@@ -132,13 +133,22 @@ app.get('/', function(req,res){
 
                      if(currentPost.quick){
                          
-                         html += '<p>quick canvas: <span class=\"quick_code\">'+ currentPost.quick +'<\/span><\/p>'
+                         html += '<div id="post_container_'+wallposts[i]._id+'" class="quickpost_container">'+
+                             '<p>quick canvas: <\/p>'+
+                             '<div id="post_icon_'+wallposts[i]._id+'" class="quickpost_icon"><\/div>'+
+                             '<span class=\"quickpost_code\">'+ currentPost.quick +'<\/span>'+
+                         '<\/div>';
                      
                      }
                  }
 
-                 res.render('index', { displayname: user.displayName,
-                              html_wall_content: html });
+                 // render
+                 res.render('index',{
+ 
+                     displayname: user.displayName,
+                     html_wall_content: html 
+
+                 });
 
             }else{
 
@@ -148,9 +158,6 @@ app.get('/', function(req,res){
             }
 
         });        
-
-
-        
 
     });
 
@@ -176,11 +183,7 @@ app.post('/', function(req,res){
       
     }
 
-    console.log('post type: ' + postType);
-
-    wallpost.postToPage(req.user.name, ':username:'+req.user.name, postType, req.get('wallpost'), function(status, post){
-
-        console.log('something might have happened');
+    wallpost.postToPage(req.user.name,':username:'+req.user.name,postType,req.get('wallpost'),function(status, post){
 
         // if success send back the wallpost object
         if(status === 'success'){

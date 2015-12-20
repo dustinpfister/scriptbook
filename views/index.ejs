@@ -121,58 +121,9 @@
         </div>
 
 
-<!-- the old client system
-
-	<label>Say:</label>
-	<input id="wall_say" type="text" name="say"/>
-        <input id="wall_post" type="submit" value="post">
-	<br>       
-
---> 
         <%- html_wall_content %>
     </div>
 </div>
 
 <!-- the post client system -->
 <script src="/js/post_client.js"></script>
-
-<!--
-<script>
-
-    // yes we will want to do this client side as well some time
-    var getPosts = function(){
-
-
-    }
-
-
-    // send a wall post
-    var send = function(data){
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '');
-        xhr.setRequestHeader('wallpost', JSON.stringify(data));
-
-        xhr.onreadystatechange = function(){
-
-            if(this.readyState === 4){
-
-                document.getElementById('query').innerHTML = this.response;
-                console.log(this.response);
-        
-            }
-
-        };
-
-        xhr.send();
-
-    };
-
-    // attach event for wall_post button
-    document.getElementById('wall_post').addEventListener('click', function(){
-
-        send({say:document.getElementById('wall_say').value});
-
-    });
-
-</script>
--->
