@@ -102,6 +102,7 @@ app.get('*', function(req,res,next){
 
 });
 
+// ALERT! BOOKMARK! how about a client system that dials home instead of server side rendering?
 // root namespace
 app.get('/', function(req,res){
 
@@ -120,33 +121,59 @@ app.get('/', function(req,res){
                  i = len;
                  html='';
 
+                
                  // render all posts for now
                  while(i--){
 
                      currentPost = JSON.parse(wallposts[i].json);
+                     
+                     // html context that will be in all posts
+                     html += '<div id="post_container_'+wallposts[i]._id+'" class=\"post_container\">';
 
+                     // say post container
                      if(currentPost.say){
 
-                         html += '<p>'+currentPost.say+'<\/p>'
+                         //html += '<p>'+currentPost.say+'<\/p>';
+
+                        html += '<div class="post_say"><p>'+currentPost.say+'<\/p><\/div>';
 
                      }
 
+                     // quick canvas container
                      if(currentPost.quick){
                          
+                         /*
                          html += '<div id="post_container_'+wallposts[i]._id+'" class="quickpost_container">'+
                              '<p>quick canvas: <\/p>'+
                              '<div id="post_icon_'+wallposts[i]._id+'" class="quickpost_icon"><\/div>'+
                              '<span class=\"quickpost_code\">'+ currentPost.quick +'<\/span>'+
                          '<\/div>';
-                     
+                         */
+
+                        html += '<div class=\"quickcanvas_container\">'+
+                             '<div class=\"quickcanvas_icon_large\"><\/div>'+
+                             '<div class=\"quickcanvas_icon_small\"><\/div>'+
+                             '<div class=\"quickcanvas_content\">'+
+                                 '<textarea class=\"quickcanvas_code\">'+ currentPost.quick +'<\/textarea>'+
+                                 '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"html//frame_quick_canvas.html\"><\/iframe>'+
+                             '<\/div>'+
+                             '<div class=\"quickcanvas_controls\">'+
+                                 '<input class=\"quickcanvas_button_runkill\" type=\"button\" value=\"RUN\">'+
+                                 '<input class=\"quickcanvas_button_hide\" type=\"button\" value=\"hide\">'+
+                             '<\/div>'+
+                       '<\/div>';
+
                      }
+
+                     // end post container
+                     html += '<\/div><!-- end post -->';
                  }
 
                  // render
                  res.render('index',{
  
                      displayname: user.displayName,
-                     html_wall_content: html 
+                     wall_posts: html 
 
                  });
 

@@ -15,46 +15,84 @@ body{
 
 /* INDEX VIEW CLASSES */
 
+/* POSTS */
+
+.post_container{
+    padding: 10px;
+    background: #afafaf;
+    margin-bottom: 10px;
+
+}
+
 #say_container{
   
   /*display:none;*/
   
 }
 
-#quick_container{
-  
-  display: none;
-  
-}
 
-.quick_canvas{
+/* quick canvas*/
 
-    background: #00ffff;
+.quickcanvas_container{
 
 }
 
+.quickcanvas_content{
 
-/* quick post*/
-.quickpost_code{
+    display: none;
+
+    width: 640px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.quickcanvas_code{
+
+    width:320px;
+    height:240px;
+}
+
+.quickcanvas_iframe{
+    
+    
+    
+    outline: 2px solid #0000ff;
+    border: 0px;
+    width:320px;
+    height:240px;
+    overflow: hidden;
+
+}
+
+.quickcanvas_icon_large{
+
+    display:block;
+
+    width:256px;
+    height:256px;
+    background: black;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.quickcanvas_icon_small{
 
     display:none;
 
-}
-.quickpost_container{
-
-    outline: 1px solid #00ff00;
-
-}
-.quickpost_icon{
     width:64px;
     height:64px;
-    outline: 1px solid #00ff00;
+    background: black;
+   
 }
 
-#quick_input{
 
-    font-size: 10px;
-    width: 320px;
-    height: 240px;
 
+.quickcanvas_controls{
+
+    display:none;
+    
+    width: 640px;
+
+    margin-left:auto;
+    margin-right:auto;
 }

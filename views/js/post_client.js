@@ -5,6 +5,207 @@
  *
  */
 
+// Yes we will want a whole new client system.
+
+/*
+
+    * system dials back home to get wall posts
+
+    * RATING:
+
+        * no likes, or upvotes/downvotes, but there are "ratings"
+        * ratings apply to postings
+        * a rating has a value between -1, and 1
+        * a rating value of 0 is the same things as unrated
+        * a rating count is the number of times the post has been rated by users
+        * people can rate there own posts
+
+    * POSTS:
+
+        * all posts:
+
+            * avatar of the person who posted
+            * timestamp
+            * other relavent info (upvotes ratecount, avgrating)
+
+        * quick canvas posts:
+
+            * visible large thumnail image
+            * invisible small thumnail
+            * invisible textarea that contains the javascript of the quick canvas post
+            * invisible iframe with canvas inside with id "quick_canvas"
+            * invisible buttons for run/kill, hide (for starters)
+
+            * when large thumnail is clicked/pressed visible/invisible content toggles
+            * when hide button is clicked/pressed visible/invisible content toggles
+             
+            * run button will be presant if quick canvas has not been started
+            * when run button is clicked a script element will be created, 
+              the javascript will be injected into it from the textarea, and the 
+              quick canvas should start.
+            * once the quick canavs starts the run button will change to kill
+            * once the kill button is clicked the iframe will reload.
+
+
+    * site will break without javascript, but this is a sort of site where javacript will be needed anyway.
+
+*/
+
+(function () {
+
+    var quickcanvas = {
+
+        // run of kill the quickcanvas content
+        runKill : function(post,button){
+
+            if(button.value === 'RUN'){
+
+                button.value='KILL';
+                this.runContent(post);
+
+            }else{
+
+                button.value='RUN';
+                this.killContent(post);
+
+            }
+
+        },
+
+        // run quick canvas content
+        runContent : function(post){
+
+            console.log('okay run it');
+
+            var code = post.getElementsByClassName('quickcanvas_code')[0].value,
+            frame = post.getElementsByClassName('quickcanvas_iframe')[0],
+            script = document.createElement('script'),
+            doc = frame.contentDocument;
+
+            script.innerHTML = code;
+            
+            doc.body.appendChild(script);
+
+            console.log(doc.body);
+
+        },
+
+        // kill quick canvas content
+        killContent : function(post){
+
+            console.log('okay kill it');
+            post.getElementsByClassName('quickcanvas_iframe')[0].contentWindow.location.reload();
+        },
+
+        // toggle a quickcanvas post from large icon state to interface, or back
+        postToggle : function(post, open){
+
+            // get the quickcanvas container
+            var quickEl = post.getElementsByClassName('quickcanvas_container')[0];
+
+            // run threw elements
+            [].forEach.call(quickEl.children, function(child){
+          
+                var large = child.className.indexOf('quickcanvas_icon_large') === -1 ;
+
+                if(!open){
+                    large = !large;
+                } 
+
+                // show all but large icon
+                if(large){
+                    child.style.display = 'block';
+                }else{
+
+                    child.style.display = 'none';
+
+                }
+            });
+
+        }
+
+    };
+
+
+    var posts = document.getElementsByClassName('post_container');
+
+    // main post click/touch handler
+    var postAction = function(e){
+        
+        console.log(e.target);
+
+        if(e.target.className.indexOf('quickcanvas_icon_large') !== -1){
+
+              postAction_quickcanvas_icon_large(this, e.target);
+
+        }
+
+        if(e.target.className.indexOf('quickcanvas_icon_small') !== -1){
+
+              postAction_quickcanvas_icon_small(this, e.target);
+
+        }
+
+        if(e.target.className.indexOf('quickcanvas_button_hide') !== -1){
+
+              postAction_quickcanvas_button_hide(this, e.target);
+
+        }
+       
+        if(e.target.className.indexOf('quickcanvas_button_runkill') !== -1){
+
+              postAction_quickcanvas_button_runkill(this, e.target);
+
+        }
+
+    },
+
+    // hide large icon, run threw post, make hidden elements appear
+    postAction_quickcanvas_icon_large = function(post, icon){
+
+        quickcanvas.postToggle(post, true);
+
+    },
+
+
+
+    postAction_quickcanvas_icon_small = function(post, icon){
+    
+        // hide
+        quickcanvas.postToggle(post, false);
+    },
+
+     postAction_quickcanvas_button_hide = function(post, button){
+    
+        // hide
+        quickcanvas.postToggle(post, false);
+
+    },
+
+    postAction_quickcanvas_button_runkill = function(post, button){
+
+        // run or kill content
+        quickcanvas.runKill(post,button);
+
+    };
+
+   
+
+
+
+    // attach to all posts
+    [].forEach.call(posts, function(post){
+
+        post.addEventListener('click', postAction);
+
+    });
+
+
+}());
+
+
+
+/*
 (function () {
 
 	// wrapping document.getElementById (maybe i should use jquery?)
@@ -47,8 +248,6 @@
                 i++;
             }
 
-
-
         },
 
         // inject the quick canvas player
@@ -71,6 +270,7 @@
 
             // ALERT! okay so we have a big problem with more then one id on the same canvas
             // maybe we can just have one canvas that we move around?
+            // HEY THIS WILL NOT BE A PROBLEM IF THE CANVAS IS IN ITS OWN IFRAME!
             canvas.id = 'quick_canvas';
 
             script.innerHTML = codeEl.innerHTML;
@@ -287,3 +487,5 @@
 	}());
 
 }());
+
+*/

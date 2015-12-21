@@ -1,3 +1,5 @@
+
+<!-- nav -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -19,12 +21,27 @@
     </div>
 </nav>
 
+<!-- content -->
 <div class="content-container">
     <p> Welcome to scriptBook! user : <span class="user_displayname"><%= displayname %></span> <a href="/logout">logout</a></p>
+
+    <!-- the wall -->
+    <div id="wall_container">
+
+        <!-- this will contain the wall posts -->
+        <div id="wall_posts">
+
+            <%- wall_posts %>
+
+        </div>
+
+    </div>
     
+    <!-- the wall -->
+    <!--
     <div id="wall">
 
-<form>
+        <form>
             <input name="post_type" id="wall_radio_say" value="say" type="radio" checked>Say
             <input name="post_type" id="wall_radio_quick_canvas" value="quick" type="radio">Quick Canvas
         </form>
@@ -121,8 +138,10 @@
         </div>
 
 
-        <%- html_wall_content %>
+        
     </div>
+
+    -->
 </div>
 
 <!-- the post client system -->
