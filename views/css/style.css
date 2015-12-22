@@ -16,6 +16,13 @@ body{
 /* INDEX VIEW CLASSES */
 
 /* POSTS */
+.post_info{
+
+    font-size: 10px;
+    font-family: courier;
+
+}
+
 #wall_newpost{
 
     margin-bottom:100px;

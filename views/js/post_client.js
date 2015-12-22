@@ -59,8 +59,16 @@
     get = function(id){ return document.getElementById(id)},
 
     // send a wall post
-		sendPost = function (data) {
+		sendPost = function (data, done) {
 			var xhr = new XMLHttpRequest();
+
+                        if(done === undefined){
+                            done = function(response){
+                                console.log('you did not give a callback for the response but here it is in the console: ');
+                                console.log(response);
+                            }
+                        }
+
 			xhr.open('POST', '');
 			xhr.setRequestHeader('wallpost', JSON.stringify(data));
 
@@ -68,8 +76,7 @@
 
 				if (this.readyState === 4) {
 
-					//get('query').innerHTML = this.response;
-					console.log(JSON.parse(this.response));
+                                        done(JSON.parse(this.response));
 
 				}
 
@@ -271,7 +278,6 @@
 
             if(e.target.className === 'say_post'){
 
-
                 var saying = this.getElementsByClassName('say_input')[0].value;
 
 			// client side sanatation
@@ -284,12 +290,36 @@
 			}
 
                         // send wall post
-			sendPost({
-                            postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
-                            postTo: '?user',
-                            postType: 'say',
-                            postContent:saying
-                        });
+			sendPost(
+                            {
+                                postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
+                                postTo: '?user',
+                                postType: 'say',
+                                postContent:saying
+                            },
+
+                            // what to do with the response
+                            function(response){
+
+                                var post_container = document.createElement('div'),
+                                parrent = get('wall_posts');
+
+                                //'<div id="post_container_'+response._id+'" class=\"post_container\">'+
+                                post_container.id = "post_container_'+response._id+'";
+                                post_container.className = "post_container";
+                                post_container.addEventListener('click', postAction);
+
+                                post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"'+response.postOwner + '\", at = new Date(\"'+ response.postTime +'\");<\/div>'+
+                                    '<div class="post_say"><p>'+response.postContent+'<\/p><\/div>';
+                                
+
+                                if(parrent.children.length > 0){
+                                    parrent.insertBefore(post_container, parrent.children[0]);
+                                }
+
+                            }
+
+                        );
             }
 
         });
@@ -310,12 +340,47 @@
                //sendPost({quick:this.getElementsByClassName('quickcanvas_code')[0].value});
 
                // send wall post
-	       sendPost({
-                   postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
-                   postTo: '?user',
-                   postType: 'quickcanvas',
-                   postContent: this.getElementsByClassName('quickcanvas_code')[0].value
-               });
+	       sendPost(
+                   {
+                       postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
+                       postTo: '?user',
+                       postType: 'quickcanvas',
+                       postContent: this.getElementsByClassName('quickcanvas_code')[0].value
+                   },
+                   function(response){
+
+                         var post_container = document.createElement('div'),
+                                parrent = get('wall_posts');
+
+                         // '<div id="post_container_'+response._id+'" class=\"post_container\">'+
+                         post_container.id = "post_container_'+response._id+'";
+                         post_container.className = "post_container";
+                         post_container.addEventListener('click', postAction);
+
+                                post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"'+response.postOwner + '\", at = new Date(\"'+ response.postTime +'\");<\/div>'+
+                                    //'<div class="post_say"><p>'+response.postContent+'<\/p><\/div>'
+
+                                    '<div class=\"quickcanvas_container\">'+
+                             '<div class=\"quickcanvas_icon_large\"><\/div>'+
+                             '<div class=\"quickcanvas_icon_small\"><\/div>'+
+                             '<div class=\"quickcanvas_content\">'+
+                                 '<textarea class=\"quickcanvas_code\">'+ response.postContent +'<\/textarea>'+
+                                 '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"html//frame_quick_canvas.html\"><\/iframe>'+
+                             '<\/div>'+
+                             '<div class=\"quickcanvas_controls\">'+
+                                 '<input class=\"quickcanvas_button_runkill\" type=\"button\" value=\"RUN\">'+
+                                 '<input class=\"quickcanvas_button_hide\" type=\"button\" value=\"hide\">'+
+                             '<\/div>'+
+                       '<\/div>';
+
+                                if(parrent.children.length > 0){
+                                    parrent.insertBefore(post_container, parrent.children[0]);
+                                }
+
+                                // bookmark: but then we need to attach the event handler!
+
+                   }
+               );
 
            }
 
