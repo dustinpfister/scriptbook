@@ -128,7 +128,8 @@ app.get('/', function(req,res){
                      currentPost = JSON.parse(wallposts[i].json);
                      
                      // html context that will be in all posts
-                     html += '<div id="post_container_'+wallposts[i]._id+'" class=\"post_container\">';
+                     html += '<div id="post_container_'+wallposts[i]._id+'" class=\"post_container\">'+
+                        ' <div class=\"post_avatar\">'+wallposts[i].toPage+'<\/div>'
 
                      // say post container
                      if(currentPost.say){
@@ -171,7 +172,6 @@ app.get('/', function(req,res){
 
                  // render
                  res.render('index',{
- 
                      displayname: user.displayName,
                      wall_posts: html 
 
@@ -179,8 +179,10 @@ app.get('/', function(req,res){
 
             }else{
 
-                 res.render('index', { displayname: user.displayName,
-                              html_wall_content: 'why not post something' });
+                 res.render('index', { 
+                     displayname: user.displayName,
+                     html_wall_content: 'why not post something' 
+                 });
 
             }
 

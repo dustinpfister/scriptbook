@@ -16,6 +16,45 @@ body{
 /* INDEX VIEW CLASSES */
 
 /* POSTS */
+#wall_newpost{
+
+    margin-bottom:100px;
+
+}
+
+#wall_newpost_say{
+
+    
+
+}
+
+#wall_newpost_quickcanvas{
+
+    display:none;
+
+}
+
+.wall_newpost_quickcanvas_icon_small{
+
+    width:64px;
+    height:64px;
+    background:black;
+
+}
+
+.wall_newpost_quickcanvas_code{
+
+    width:320px;
+    height:240px;
+
+}
+
+.wall_newpost_quickcanvas_iframe{
+
+    width:320px;
+    height:240px;
+
+}
 
 .post_container{
     padding: 10px;

@@ -53,7 +53,33 @@
 
 (function () {
 
-    var quickcanvas = {
+    
+    var posts = document.getElementsByClassName('post_container'),
+
+    get = function(id){ return document.getElementById(id)},
+
+    // send a wall post
+		sendPost = function (data) {
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '');
+			xhr.setRequestHeader('wallpost', JSON.stringify(data));
+
+			xhr.onreadystatechange = function () {
+
+				if (this.readyState === 4) {
+
+					//get('query').innerHTML = this.response;
+					console.log(JSON.parse(this.response));
+
+				}
+
+			};
+
+			xhr.send();
+
+		},
+
+    quickcanvas = {
 
         // run of kill the quickcanvas content
         runKill : function(post,button){
@@ -74,8 +100,6 @@
 
         // run quick canvas content
         runContent : function(post){
-
-            console.log('okay run it');
 
             var code = post.getElementsByClassName('quickcanvas_code')[0].value,
             frame = post.getElementsByClassName('quickcanvas_iframe')[0],
@@ -127,8 +151,6 @@
     };
 
 
-    var posts = document.getElementsByClassName('post_container');
-
     // main post click/touch handler
     var postAction = function(e){
         
@@ -167,8 +189,6 @@
 
     },
 
-
-
     postAction_quickcanvas_icon_small = function(post, icon){
     
         // hide
@@ -199,6 +219,110 @@
         post.addEventListener('click', postAction);
 
     });
+
+
+    // new post interface
+    (function () {
+
+        // get the post type radio buttons
+	var pt_radios = document.getElementsByName('wall_posttype'),
+	i = 0,
+	len = pt_radios.length,
+ 
+        // hide all post types
+	hideAll = function () {
+
+			// be sure to update this array when adding new post types
+			var pt_types = ['say', 'quickcanvas'],
+			i = 0,
+			len = pt_types.length;
+
+			// hide all.
+			while (i < len) {
+				get('wall_newpost_'+pt_types[i]).style.display = 'none';
+				i++;
+			}
+
+		};
+
+		// attach events
+		while (i < len) {
+
+			// use onchange
+			pt_radios[i].addEventListener('change', function (e) {
+
+				// get the relavent container
+				var pt_container = get('wall_newpost_'+e.target.value);
+
+				// hide all containers
+				hideAll();
+
+				// show relavent container
+				pt_container.style.display = "block";
+
+			})
+
+			i++;
+		}
+
+        get('wall_newpost_say').addEventListener('click', function(e){
+
+            console.log(e.target.className);
+
+            if(e.target.className === 'say_post'){
+
+
+                var saying = this.getElementsByClassName('say_input')[0].value;
+
+			// client side sanatation
+			if (saying === '' || saying === null) {
+
+				console.log('invalid say');
+
+				return;
+
+			}
+
+			sendPost({say:saying});
+            }
+
+        });
+
+        get('wall_newpost_quickcanvas').addEventListener('click', function(e){
+
+            console.log(this);
+            console.log(e.target.className);
+
+           if(e.target.className === 'quickcanvas_button_runkill'){
+
+               quickcanvas.runKill(this,e.target);
+
+           }
+
+           if(e.target.className === 'quickcanvas_button_post'){
+
+               console.log('POST IT!');
+
+
+
+               sendPost({quick:this.getElementsByClassName('quickcanvas_code')[0].value});
+
+           }
+
+/*
+           var theQuick = document.getElementById('quick_input').value;
+
+			// no client side sanatation!?
+			
+			sendPost({quick:theQuick});
+*/
+
+        });
+
+    }());
+
+
+
 
 
 }());
