@@ -114,9 +114,9 @@ body{
 
     display:block;
 
-    width:256px;
-    height:256px;
-    background: black;
+    width:320px;
+    height:240px;
+    background: #ff0000;
     margin-left:auto;
     margin-right:auto;
 }

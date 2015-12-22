@@ -99,11 +99,45 @@
             }else{
 
                 button.value='RUN';
+
+               // get incon from iframe
+                this.getIcon(post);   
                 this.killContent(post);
 
             }
 
         },
+
+        getIcon : function(post){
+
+            var icon = post.getElementsByClassName('quickcanvas_iframe')[0].contentWindow.document.getElementById('icon'),
+            img, container;
+
+            // make large icon
+            img =  new Image();
+            img.src = icon.src;
+            img.className = 'quickcanvas_image_large';
+            img.width = 320;
+            img.height = 240;       
+
+            container = post.getElementsByClassName('quickcanvas_icon_large')[0];
+            container.innerHTML = ''; 
+            container.appendChild(img);
+
+            // make small icon
+            img =  new Image();
+            img.src = icon.src;
+            img.className = 'quickcanvas_image_small';
+            img.width = 64;
+            img.height = 64;       
+
+            container = post.getElementsByClassName('quickcanvas_icon_small')[0]; 
+
+            container.innerHTML = '';
+            container.appendChild(img);
+
+        },
+
 
         // run quick canvas content
         runContent : function(post){
@@ -153,6 +187,12 @@
                 }
             });
 
+        },
+
+        updateIcon : function(iframe){
+
+            console.log(iframe);
+
         }
 
     };
@@ -169,7 +209,19 @@
 
         }
 
+        if(e.target.className.indexOf('quickcanvas_image_large') !== -1){
+
+              postAction_quickcanvas_icon_large(this, e.target);
+
+        }
+
         if(e.target.className.indexOf('quickcanvas_icon_small') !== -1){
+
+              postAction_quickcanvas_icon_small(this, e.target);
+
+        }
+
+        if(e.target.className.indexOf('quickcanvas_image_small') !== -1){
 
               postAction_quickcanvas_icon_small(this, e.target);
 
