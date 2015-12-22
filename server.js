@@ -173,7 +173,7 @@ app.get('/', function(req,res){
                  // render
                  res.render('index',{
                      displayname: user.displayName,
-                     wall_posts: html 
+                     inject_wall_posts: html 
 
                  });
 
@@ -181,7 +181,7 @@ app.get('/', function(req,res){
 
                  res.render('index', { 
                      displayname: user.displayName,
-                     html_wall_content: 'why not post something' 
+                     inject_wall_posts: 'why not post something' 
                  });
 
             }
