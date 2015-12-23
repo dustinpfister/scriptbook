@@ -161,7 +161,7 @@ app.get('/', function(req,res){
 
                  // render
                  res.render('index',{
-                     displayname: user.displayName,
+                     username: user.name,
                      inject_wall_posts: html 
 
                  });
@@ -169,8 +169,8 @@ app.get('/', function(req,res){
             }else{
 
                  res.render('index', { 
-                     displayname: user.displayName,
-                     inject_wall_posts: 'why not post something' 
+                     username: user.name,
+                     inject_wall_posts: '<div>why not post something<\/div>' 
                  });
 
             }
@@ -216,23 +216,6 @@ app.post('/', function(req,res){
 
     });
 
-/*
-    wallpost.postToPage(req.user.name,':username:'+req.user.name,postType,req.get('wallpost'),function(status, post){
-
-        // if success send back the wallpost object
-        if(status === 'success'){
-
-            res.send(post);
-
-        // send null if not sucess
-        }else{
-
-            res.send(null);
-
-        }
-    });
-*/
-    //res.send(null);
 });
 
 // login namespace
@@ -328,12 +311,58 @@ app.get(/user(\/.*)?/, function(req, res){
         // if root userspace ( /user )    
         }else{
 
+            res.render('userhome', {
+                username : req.user.name
+            });
+        }
+
+    }
+
+});
+
+/*
+app.get(/user(\/.*)?/, function(req, res){
+
+    var username;
+
+    // if visiter is logged in
+    if(req.user){
+        
+        // if username ( /user/username )
+        if(req.url.length > 6){
+
+            username = req.url.replace(/\/user\//,'');
+
+            users.findProfile(username, function(err,user){
+
+                if(user){
+
+                    res.render('userprofile', {
+
+                        id : user.id,
+                        name: user.name,
+                        displayname: user.displayName
+
+                    });
+
+                }else{
+
+                    res.render('usernotfound', {});
+
+                }
+            });
+
+        // if root userspace ( /user )    
+        }else{
+
             res.render('userhome', {});
         }
 
     }
 
 });
+*/
+
 
 // start the server
 server = app.listen(3000, function () {
