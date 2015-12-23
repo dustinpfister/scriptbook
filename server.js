@@ -276,6 +276,129 @@ app.post('/search', function(req, res) {
 
 });
 
+
+// the user namespace ( /user /user/ /user/username )
+app.get(/wall(\/.*)?/, function(req, res){
+
+    var username;
+
+    // if visiter is logged in
+    if(req.user){
+        
+        // if username ( /user/username )
+        if(req.url.length > 6){
+
+            username = req.url.replace(/\/wall\//,'');
+
+            users.findProfile(username, function(err,user){
+
+                // if user found
+                if(user){
+
+                    // find the users profile
+    users.findProfile(username, function(err,user){
+
+        // do they have posts?
+        wallpost.getPosts(user.name, function(wallposts){
+
+            var len,i,html,currentPost;
+
+            if(wallposts !== ''){
+
+                 // render posts
+                 len = wallposts.length;
+                 i = len;
+                 html='';
+
+                
+                 // render all posts for now
+                 while(i--){
+
+                     // html context that will be in all posts
+                     html += '<div id="post_container_'+wallposts[i]._id+'" class=\"post_container\">'+
+                        //' <div class=\"post_info\">'+wallposts[i].postOwner+'<\/div>'
+                        ' <div class=\"post_info\"> var fromUser = \"'+wallposts[i].postOwner + '\", at = new Date(\"'+ wallposts[i].postTime +'\");<\/div>';
+
+                     // say post
+                     if(wallposts[i].postType === 'say'){
+
+                        html += '<div class="post_say"><p>'+wallposts[i].postContent+'<\/p><\/div>';
+
+                     }
+
+                     // quick canvas post
+                     if(wallposts[i].postType === 'quickcanvas'){
+                         
+                        html += '<div class=\"quickcanvas_container\">'+
+                             '<div class=\"quickcanvas_icon_large\"><\/div>'+
+                             '<div class=\"quickcanvas_icon_small\"><\/div>'+
+                             '<div class=\"quickcanvas_content\">'+
+                                 '<textarea class=\"quickcanvas_code\">'+ wallposts[i].postContent +'<\/textarea>'+
+                                 '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+
+                             '<\/div>'+
+                             '<div class=\"quickcanvas_controls\">'+
+                                 '<input class=\"quickcanvas_button_runkill\" type=\"button\" value=\"RUN\">'+
+                                 '<input class=\"quickcanvas_button_hide\" type=\"button\" value=\"hide\">'+
+                             '<\/div>'+
+                       '<\/div>';
+
+                     }
+
+                     // end post container
+                     html += '<\/div><!-- end post -->';
+                 }
+
+                 // render
+                 res.render('index',{
+                     username: req.user.name,
+                     inject_wall_posts: html 
+
+                 });
+
+            }else{
+
+                 res.render('index', { 
+                     username: req.user.name,
+                     inject_wall_posts: '<div>why not post something<\/div>' 
+                 });
+
+            }
+
+        });        
+
+    });
+
+                }else{
+
+                    res.render('usernotfound', {});
+
+                }
+            });
+
+        // if root space ( /wall )    
+        }else{
+
+            users.getUserNames(function(names){
+                res.render('userhome', {
+                    username : req.user.name,
+                    otherUsers : names
+                });
+            });
+        }
+
+    }
+
+});
+app.post(/wall(\/.*)?/, function(req, res){
+
+});
+
+
+
+
+
+
+
 // the user namespace ( /user /user/ /user/username )
 app.get(/user(\/.*)?/, function(req, res){
 
