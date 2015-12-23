@@ -102,7 +102,31 @@ app.get('*', function(req,res,next){
 
 });
 
-// ALERT! BOOKMARK! how about a client system that dials home instead of server side rendering?
+
+// root namespace
+app.get('/', function(req,res){
+
+    res.render('index', { 
+        username: req.user.name
+    });
+
+
+
+});
+app.post('/', function(req,res){
+
+    res.send(null);
+
+});
+
+
+
+
+
+
+
+
+/*
 // root namespace
 app.get('/', function(req,res){
 
@@ -217,6 +241,8 @@ app.post('/', function(req,res){
     });
 
 });
+*/
+
 
 // login namespace
 app.get('/login', function(req,res){
