@@ -341,11 +341,14 @@
 
 			}
 
+                        
+
                         // send wall post
 			sendPost(
                             {
                                 postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
-                                postTo: '?user',
+                                //postTo: '?user',
+                                postTo:get('wall_username').innerHTML,
                                 postType: 'say',
                                 postContent:saying
                             },
@@ -395,7 +398,8 @@
 	       sendPost(
                    {
                        postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
-                       postTo: '?user',
+                       //postTo: '?user',
+                       postTo: get('wall_username').innerHTML,
                        postType: 'quickcanvas',
                        postContent: this.getElementsByClassName('quickcanvas_code')[0].value
                    },
@@ -417,7 +421,7 @@
                              '<div class=\"quickcanvas_icon_small\"><\/div>'+
                              '<div class=\"quickcanvas_content\">'+
                                  '<textarea class=\"quickcanvas_code\">'+ response.postContent +'<\/textarea>'+
-                                 '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"html//frame_quick_canvas.html\"><\/iframe>'+
+                                 '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+
                              '<\/div>'+
                              '<div class=\"quickcanvas_controls\">'+
                                  '<input class=\"quickcanvas_button_runkill\" type=\"button\" value=\"RUN\">'+

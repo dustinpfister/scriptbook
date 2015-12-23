@@ -349,16 +349,18 @@ app.get(/wall(\/.*)?/, function(req, res){
                  }
 
                  // render
-                 res.render('index',{
+                 res.render('userwall',{
                      username: req.user.name,
+                     wallusername : user.name,
                      inject_wall_posts: html 
 
                  });
 
             }else{
 
-                 res.render('index', { 
+                 res.render('userwall', { 
                      username: req.user.name,
+                     wallusername : user.name,
                      inject_wall_posts: '<div>why not post something<\/div>' 
                  });
 
@@ -389,7 +391,44 @@ app.get(/wall(\/.*)?/, function(req, res){
     }
 
 });
-app.post(/wall(\/.*)?/, function(req, res){
+app.post(/wall(\/.*)?/, function(req,res){
+
+    console.log('post from root');
+
+    var thePost = JSON.parse(req.get('wallpost'));
+    postType = 'none';
+
+/*
+    if(thePost.say){
+
+        postType = 'say';
+      
+    }
+
+    if(thePost.quick){
+
+        postType = 'quick';
+      
+    }
+*/
+
+   console.log('okay yes this is the header now: ' + req.get('wallpost'));
+
+    wallpost.postToUserPage(req, function(status, post){
+
+        // if success send back the wallpost object
+        if(status === 'success'){
+
+            res.send(post);
+
+        // send null if not sucess
+        }else{
+
+            res.send(null);
+
+        }
+
+    });
 
 });
 
