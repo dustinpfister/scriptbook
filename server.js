@@ -311,58 +311,20 @@ app.get(/user(\/.*)?/, function(req, res){
         // if root userspace ( /user )    
         }else{
 
-            res.render('userhome', {
-                username : req.user.name
+            users.getUserNames(function(names){
+                res.render('userhome', {
+                    username : req.user.name,
+                    otherUsers : names
+                });
             });
         }
 
     }
 
 });
-
-/*
-app.get(/user(\/.*)?/, function(req, res){
-
-    var username;
-
-    // if visiter is logged in
-    if(req.user){
-        
-        // if username ( /user/username )
-        if(req.url.length > 6){
-
-            username = req.url.replace(/\/user\//,'');
-
-            users.findProfile(username, function(err,user){
-
-                if(user){
-
-                    res.render('userprofile', {
-
-                        id : user.id,
-                        name: user.name,
-                        displayname: user.displayName
-
-                    });
-
-                }else{
-
-                    res.render('usernotfound', {});
-
-                }
-            });
-
-        // if root userspace ( /user )    
-        }else{
-
-            res.render('userhome', {});
-        }
-
-    }
+app.post(/user(\/.*)?/, function(req, res){
 
 });
-*/
-
 
 // start the server
 server = app.listen(3000, function () {

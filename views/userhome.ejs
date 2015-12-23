@@ -22,4 +22,15 @@
 <div class="content-container">
     <p>var youAre = { name: <a href="/"><%= username %></a>, logout: <a href="/logout">logout</a> }</p>
     
+    <div id="user_friends_container">
+        <p>friendList:</p>
+        <div id="user_friends_list">
+        </div>
+    </div>
+
+    <p>User List:</p>
+    <% for(var i=0; i<otherUsers.length; i++) {%>
+        <p><a href="/user/<%= otherUsers[i] %>"><%= otherUsers[i] %></a></p>
+    <% } %>
+
 </div>
