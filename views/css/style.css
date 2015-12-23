@@ -4,13 +4,66 @@ body{
 
 
 }
-
 .content-container{
 
    padding: 25px;
 
 }
 
+/* GRID */
+
+.col-md-8{
+
+}
+
+.col-md-4{
+
+}
+
+/* login.ejs */
+
+.login_welcome{
+
+    margin:10px;
+    padding: 10px;
+    border-top: 2px solid #000000;
+    border-right: 2px solid #000000;
+    background: grey;
+    min-height: 300px;
+
+}
+
+.login_welcometo{
+
+    font-family: arial;
+    font-size: 10pt;
+
+}
+
+.login_logo{
+
+   font-family: courier;
+   font-size:26pt;
+   
+}
+
+.login_message{
+
+    font-family: courier;
+    font-size: 8pt;
+    font-style: italic;
+    text-align:left;
+
+}
+
+.login_loginform{
+
+    margin:10px;
+    padding: 10px;
+    border-top: 2px solid #000000;
+    border-left: 2px solid #000000;
+
+}
 
 
 /* INDEX VIEW CLASSES */
