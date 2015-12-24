@@ -12,27 +12,73 @@
 
     get = function(id){ return document.getElementById(id)},
 
-injectpost_say = function(response){
+    postType = {
+    injectpost : function(response){
 
-var post_container = document.createElement('div'),
-                                parrent = get('wall_posts');
+        console.log(response.postType);
+
+        // inject the post
+        this['injectpost_'+response.postType](response);
+
+    },
+
+    injectpost_say : function(response){
+
+        var post_container = document.createElement('div'),
+        parrent = get('wall_posts');
 
                                 //'<div id="post_container_'+response._id+'" class=\"post_container\">'+
-                                post_container.id = 'post_container_'+response._id;
-                                post_container.className = "post_container";
-                                post_container.addEventListener('click', postAction);
+        post_container.id = 'post_container_'+response._id;
+        post_container.className = "post_container";
+        post_container.addEventListener('click', postAction);
+
+        post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"'+response.postOwner + 
+            '\", at = new Date(\"'+ response.postTime +'\");<\/div>'+
+            '<div class="post_say"><p>'+response.postContent+'<\/p><\/div>';
+                                
+        if(parrent.children.length > 0){
+            parrent.insertBefore(post_container, parrent.children[0]);
+        }
+
+    },
+
+    injectpost_quickcanvas : function(response){
+
+        var post_container = document.createElement('div'),
+                                parrent = get('wall_posts');
+
+                         // '<div id="post_container_'+response._id+'" class=\"post_container\">'+
+                         post_container.id = 'post_container_'+response._id;
+                         post_container.className = "post_container";
+                         post_container.addEventListener('click', postAction);
 
                                 post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"'+response.postOwner + '\", at = new Date(\"'+ response.postTime +'\");<\/div>'+
-                                    '<div class="post_say"><p>'+response.postContent+'<\/p><\/div>';
-                                
+                                    //'<div class="post_say"><p>'+response.postContent+'<\/p><\/div>'
+
+                                    '<div class=\"quickcanvas_container\">'+
+                             '<div class=\"quickcanvas_icon_large\"><\/div>'+
+                             '<div class=\"quickcanvas_icon_small\"><\/div>'+
+                             '<div class=\"quickcanvas_content\">'+
+                                 '<textarea class=\"quickcanvas_code\">'+ response.postContent +'<\/textarea>'+
+                                 '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+
+                             '<\/div>'+
+                             '<div class=\"quickcanvas_controls\">'+
+                                 '<input class=\"quickcanvas_button_runkill\" type=\"button\" value=\"RUN\">'+
+                                 '<input class=\"quickcanvas_button_hide\" type=\"button\" value=\"hide\">'+
+                             '<\/div>'+
+                       '<\/div>';
 
                                 if(parrent.children.length > 0){
                                     parrent.insertBefore(post_container, parrent.children[0]);
                                 }
 
+                                // bookmark: but then we need to attach the event handler!
+
+
+
+    },
 
 },
-
 
     quickcanvas = {
 
@@ -304,25 +350,8 @@ var post_container = document.createElement('div'),
                             // what to do with the response
                             function(response){
 
-injectpost_say(response);
+                                postType.injectpost_say(response);
 
-/*
-                                var post_container = document.createElement('div'),
-                                parrent = get('wall_posts');
-
-                                //'<div id="post_container_'+response._id+'" class=\"post_container\">'+
-                                post_container.id = "post_container_'+response._id+'";
-                                post_container.className = "post_container";
-                                post_container.addEventListener('click', postAction);
-
-                                post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"'+response.postOwner + '\", at = new Date(\"'+ response.postTime +'\");<\/div>'+
-                                    '<div class="post_say"><p>'+response.postContent+'<\/p><\/div>';
-                                
-
-                                if(parrent.children.length > 0){
-                                    parrent.insertBefore(post_container, parrent.children[0]);
-                                }
-*/
                             }
 
                         );
@@ -353,35 +382,7 @@ injectpost_say(response);
                    },
                    function(response){
 
-                         var post_container = document.createElement('div'),
-                                parrent = get('wall_posts');
-
-                         // '<div id="post_container_'+response._id+'" class=\"post_container\">'+
-                         post_container.id = "post_container_'+response._id+'";
-                         post_container.className = "post_container";
-                         post_container.addEventListener('click', postAction);
-
-                                post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"'+response.postOwner + '\", at = new Date(\"'+ response.postTime +'\");<\/div>'+
-                                    //'<div class="post_say"><p>'+response.postContent+'<\/p><\/div>'
-
-                                    '<div class=\"quickcanvas_container\">'+
-                             '<div class=\"quickcanvas_icon_large\"><\/div>'+
-                             '<div class=\"quickcanvas_icon_small\"><\/div>'+
-                             '<div class=\"quickcanvas_content\">'+
-                                 '<textarea class=\"quickcanvas_code\">'+ response.postContent +'<\/textarea>'+
-                                 '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+
-                             '<\/div>'+
-                             '<div class=\"quickcanvas_controls\">'+
-                                 '<input class=\"quickcanvas_button_runkill\" type=\"button\" value=\"RUN\">'+
-                                 '<input class=\"quickcanvas_button_hide\" type=\"button\" value=\"hide\">'+
-                             '<\/div>'+
-                       '<\/div>';
-
-                                if(parrent.children.length > 0){
-                                    parrent.insertBefore(post_container, parrent.children[0]);
-                                }
-
-                                // bookmark: but then we need to attach the event handler!
+                       postType.injectpost_quickcanvas(response);                         
 
                    }
                );
@@ -420,7 +421,7 @@ injectpost_say(response);
                 if(res.posts.length > 0 ){
 
                     console.log('new posts!');
-                    injectpost_say(res.posts[0]);
+                    postType.injectpost(res.posts[0]);
 
                 }else{
 
