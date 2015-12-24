@@ -5,52 +5,6 @@
  *
  */
 
-// Yes we will want a whole new client system.
-
-/*
-
-    * system dials back home to get wall posts
-
-    * RATING:
-
-        * no likes, or upvotes/downvotes, but there are "ratings"
-        * ratings apply to postings
-        * a rating has a value between -1, and 1
-        * a rating value of 0 is the same things as unrated
-        * a rating count is the number of times the post has been rated by users
-        * people can rate there own posts
-
-    * POSTS:
-
-        * all posts:
-
-            * avatar of the person who posted
-            * timestamp
-            * other relavent info (upvotes ratecount, avgrating)
-
-        * quick canvas posts:
-
-            * visible large thumnail image
-            * invisible small thumnail
-            * invisible textarea that contains the javascript of the quick canvas post
-            * invisible iframe with canvas inside with id "quick_canvas"
-            * invisible buttons for run/kill, hide (for starters)
-
-            * when large thumnail is clicked/pressed visible/invisible content toggles
-            * when hide button is clicked/pressed visible/invisible content toggles
-             
-            * run button will be presant if quick canvas has not been started
-            * when run button is clicked a script element will be created, 
-              the javascript will be injected into it from the textarea, and the 
-              quick canvas should start.
-            * once the quick canavs starts the run button will change to kill
-            * once the kill button is clicked the iframe will reload.
-
-
-    * site will break without javascript, but this is a sort of site where javacript will be needed anyway.
-
-*/
-
 (function () {
 
     
@@ -58,34 +12,45 @@
 
     get = function(id){ return document.getElementById(id)},
 
-    // send a wall post
-		sendPost = function (data, done) {
-			var xhr = new XMLHttpRequest();
+/*
+    // better httpPost function
+    httpPost = function (header, data, done) {
+        var xhr = new XMLHttpRequest();
 
-                        if(done === undefined){
-                            done = function(response){
-                                console.log('you did not give a callback for the response but here it is in the console: ');
-                                console.log(response);
-                            }
-                        }
+        if(done === undefined){
 
-			xhr.open('POST', '');
-			xhr.setRequestHeader('wallpost', JSON.stringify(data));
+            done = function(response){
 
-			xhr.onreadystatechange = function () {
+                console.log('you did not give a callback for the response but here it is in the console: ');
+                console.log(response);
 
-				if (this.readyState === 4) {
+            }
 
-                                        done(JSON.parse(this.response));
+        }
 
-				}
+        xhr.open('POST', '');
+        xhr.setRequestHeader(header, JSON.stringify(data));
 
-			};
+        xhr.onreadystatechange = function () {
 
-			xhr.send();
+            if (this.readyState === 4) {
 
-		},
+                done(JSON.parse(this.response));
 
+            }
+
+        };
+
+        xhr.send();
+
+    },
+
+    sendWallPost = function(data, done){
+
+        httpPost('wallpost', data, done);
+
+    },
+*/
     quickcanvas = {
 
         // run of kill the quickcanvas content
@@ -344,7 +309,7 @@
                         
 
                         // send wall post
-			sendPost(
+			myHttp.sendWallPost(
                             {
                                 postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
                                 //postTo: '?user',
@@ -392,13 +357,10 @@
 
            if(e.target.className === 'quickcanvas_button_post'){
 
-               //sendPost({quick:this.getElementsByClassName('quickcanvas_code')[0].value});
-
                // send wall post
-	       sendPost(
+	       myHttp.sendWallPost(
                    {
                        postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
-                       //postTo: '?user',
                        postTo: get('wall_username').innerHTML,
                        postType: 'quickcanvas',
                        postContent: this.getElementsByClassName('quickcanvas_code')[0].value
