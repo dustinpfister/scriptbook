@@ -12,6 +12,28 @@
 
     get = function(id){ return document.getElementById(id)},
 
+injectpost_say = function(response){
+
+var post_container = document.createElement('div'),
+                                parrent = get('wall_posts');
+
+                                //'<div id="post_container_'+response._id+'" class=\"post_container\">'+
+                                post_container.id = 'post_container_'+response._id;
+                                post_container.className = "post_container";
+                                post_container.addEventListener('click', postAction);
+
+                                post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"'+response.postOwner + '\", at = new Date(\"'+ response.postTime +'\");<\/div>'+
+                                    '<div class="post_say"><p>'+response.postContent+'<\/p><\/div>';
+                                
+
+                                if(parrent.children.length > 0){
+                                    parrent.insertBefore(post_container, parrent.children[0]);
+                                }
+
+
+},
+
+
     quickcanvas = {
 
         // run of kill the quickcanvas content
@@ -282,6 +304,9 @@
                             // what to do with the response
                             function(response){
 
+injectpost_say(response);
+
+/*
                                 var post_container = document.createElement('div'),
                                 parrent = get('wall_posts');
 
@@ -297,7 +322,7 @@
                                 if(parrent.children.length > 0){
                                     parrent.insertBefore(post_container, parrent.children[0]);
                                 }
-
+*/
                             }
 
                         );
@@ -379,17 +404,30 @@
         latestID =  posts.children[0].id.replace(/post_container_/,''),
         oldestID = posts.children[posts.children.length-1].id.replace(/post_container_/,'');
         
+        console.log(latestID);
+
         //console.log('making post request with latest post of _id: ' + latestID);
 
         myHttp.sendPostCheck(
             {
                 checkType: 'newposts',
+                forUser: get('wall_username').innerHTML,
                 latestID: latestID,
                 oldestID: oldestID
             }, 
             function(res){
 
-                console.log(res);
+                if(res.posts.length > 0 ){
+
+                    console.log('new posts!');
+                    injectpost_say(res.posts[0]);
+
+                }else{
+
+                    //console.log(res.posts.length);
+
+                }
+
 
             }
         );
