@@ -367,4 +367,35 @@
 
     }());
 
+
+
+    // post check thread
+    var postCheck = function(){
+
+        setTimeout(postCheck, 3000);
+
+        // get the newest post id
+        var posts = get('wall_posts'),
+        latestID =  posts.children[0].id.replace(/post_container_/,''),
+        oldestID = posts.children[posts.children.length-1].id.replace(/post_container_/,'');
+        
+        //console.log('making post request with latest post of _id: ' + latestID);
+
+        myHttp.sendPostCheck(
+            {
+                checkType: 'newposts',
+                latestID: latestID,
+                oldestID: oldestID
+            }, 
+            function(res){
+
+                console.log(res);
+
+            }
+        );
+
+    };
+
+    postCheck();
+
 }());

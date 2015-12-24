@@ -39,6 +39,13 @@ var myHttp = (function(){
 
             httpPost('wallpost', data, done);
 
+        },
+
+        // send a post check
+        sendPostCheck : function(data,done){
+
+            httpPost('postcheck',data,done);
+
         }
 
     }

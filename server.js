@@ -297,6 +297,8 @@ app.post(/wall(\/.*)?/, function(req,res){
 
     console.log('post from root');
 
+    // if wall post
+    if(req.get('wallpost')){
     var thePost = JSON.parse(req.get('wallpost'));
     postType = 'none';
 
@@ -317,6 +319,28 @@ app.post(/wall(\/.*)?/, function(req,res){
         }
 
     });
+
+    // else if not a wall post
+    }else{
+
+        if(req.get('postcheck')){
+
+           // res.send(JSON.stringify({postcheck: 'sure i will get on that.'}));
+           //res.send(req.get('postcheck'));
+           wallpost.postCheck(req, function(post){
+
+               res.send(JSON.stringify(post));
+
+           });
+
+
+        }else{    
+
+            res.send(JSON.stringify({nullpost:true}));
+
+        }
+
+    }
 
 });
 
