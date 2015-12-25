@@ -398,7 +398,7 @@
     // post check thread
     var postCheck = function(){
 
-        setTimeout(postCheck, 3000);
+        setTimeout(postCheck, 30000);
 
         // get the newest post id
         var posts = get('wall_posts'),
