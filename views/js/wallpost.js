@@ -5,7 +5,7 @@
  *
  */
 
-(function () {
+//(function () {
 
     
     var posts = document.getElementsByClassName('post_container'),
@@ -394,11 +394,11 @@
     }());
 
 
-
+/*
     // post check thread
     var postCheck = function(){
 
-        setTimeout(postCheck, 30000);
+        setTimeout(postCheck, 10000);
 
         // get the newest post id
         var posts = get('wall_posts'),
@@ -436,5 +436,5 @@
     };
 
     postCheck();
-
-}());
+*/
+//}());
