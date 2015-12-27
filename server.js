@@ -1,4 +1,3 @@
-
 var express = require('express'),
 app = express(),
 passport = require('passport'),
@@ -36,7 +35,6 @@ passport.deserializeUser(function(id, cb) {
   });
 });
 
-
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
 app.use(require('morgan')('combined'));
@@ -53,7 +51,6 @@ app.use(passport.session());
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.use(express.static('views')); // must do this to get external files
-
 
 // Content-Security-Policy
 app.use(function(req,res,next){
@@ -102,7 +99,6 @@ app.get('*', function(req,res,next){
 
 });
 
-
 // root namespace
 app.get('/', function(req,res){
 
@@ -110,15 +106,12 @@ app.get('/', function(req,res){
         username: req.user.name
     });
 
-
-
 });
 app.post('/', function(req,res){
 
     res.send(null);
 
 });
-
 
 // login namespace
 app.get('/login', function(req,res){
@@ -178,7 +171,6 @@ app.post('/search', function(req, res) {
 
 });
 
-
 // the user namespace ( /user /user/ /user/username )
 app.get(/wall(\/.*)?/, function(req, res){
 
@@ -211,7 +203,6 @@ app.get(/wall(\/.*)?/, function(req, res){
                  len = wallposts.length;
                  i = len;
                  html='';
-
                 
                  // render all posts for now
                  while(i--){
@@ -344,12 +335,6 @@ app.post(/wall(\/.*)?/, function(req,res){
 
 });
 
-
-
-
-
-
-
 // the user namespace ( /user /user/ /user/username )
 app.get(/user(\/.*)?/, function(req, res){
 
@@ -407,4 +392,5 @@ server = app.listen(3000, function () {
 
   console.log('it lives.');
   console.log('scriptbook listening at http://%s:%s', host, port);
+
 });
