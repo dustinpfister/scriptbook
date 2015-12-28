@@ -433,7 +433,12 @@
 
                });
 
-               img.src = '/img/no_canvas_one.png';
+               //img.src = '/img/no_canvas_one.png';
+               // ALERT! assuming that img 0 is the large one
+               img.src = this.getElementsByTagName('img')[0].src;
+
+               //console.log(this.getElementsByTagName('img')[0].src);
+
 
            }
 
