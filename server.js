@@ -39,8 +39,13 @@ passport.deserializeUser(function(id, cb) {
 // logging, parsing, and session handling.
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+
+//app.use(bodyParser.json({limit: '5mb'}));
+//app.use(bodyParser.urlencoded({limit: '5mb'}));
+app.use(require('body-parser').json({limit: '5mb'}));
+app.use(require('body-parser').urlencoded({ extended: true, limit: '5mb'}));
+//app.use(require('body-parser').urlencoded({ extended: true}));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false, limit:'5mb' }));
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
@@ -142,6 +147,9 @@ app.get('/signup', function(req,res){
 });
 app.post('/signup', function(req, res) {
         
+    
+    console.log('okay so this is what we get for reg.body here: '+JSON.stringify(req.body));
+
     users.createUser( JSON.stringify(req.body) );
 
     res.redirect('/login');
@@ -286,12 +294,14 @@ app.get(/wall(\/.*)?/, function(req, res){
 });
 app.post(/wall(\/.*)?/, function(req,res){
 
-    console.log('post from root');
+    console.log('post from /wall');
+    console.log(req.get('scriptbook-post'));
 
     // if wall post
-    if(req.get('wallpost')){
-    var thePost = JSON.parse(req.get('wallpost'));
-    postType = 'none';
+    //if(req.get('wallpost')){
+    if(req.get('scriptbook-post') === 'wallpost'){
+   // var thePost = JSON.parse(req.get('wallpost'));
+    //var postType = 'none';
 
    console.log('okay yes this is the header now: ' + req.get('wallpost'));
 
@@ -314,7 +324,8 @@ app.post(/wall(\/.*)?/, function(req,res){
     // else if not a wall post
     }else{
 
-        if(req.get('postcheck')){
+        //if(req.get('postcheck')){
+        if(req.get('scriptbook-post') === 'postcheck'){
 
            // res.send(JSON.stringify({postcheck: 'sure i will get on that.'}));
            //res.send(req.get('postcheck'));

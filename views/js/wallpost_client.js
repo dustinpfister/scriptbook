@@ -5,12 +5,32 @@
  *
  */
 
-//(function () {
-
-    
     var posts = document.getElementsByClassName('post_container'),
 
     get = function(id){ return document.getElementById(id)},
+
+    getImageDataURL = function(img) {
+        
+        // Create an empty canvas element
+        var canvas = document.createElement("canvas"),
+        ctx = canvas.getContext("2d");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Copy the image contents to the canvas
+        ctx.drawImage(img, 0, 0);
+
+        var dataURL = canvas.toDataURL("image/png");
+
+        console.log(dataURL.length);
+
+        // return the data-URL formatted image
+        //return dataURL.substr(0,90000);
+
+        //return 'the new shit'
+
+        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    },
 
     postType = {
     injectpost : function(response){
@@ -320,49 +340,56 @@
 
         get('wall_newpost_say').addEventListener('click', function(e){
 
-            console.log(e.target.className);
-
             if(e.target.className === 'say_post'){
 
                 var saying = this.getElementsByClassName('say_input')[0].value;
 
-			// client side sanatation
-			if (saying === '' || saying === null) {
+                // client side sanatation
+		if (saying === '' || saying === null) {
 
-				console.log('invalid say');
+		    console.log('invalid say');
 
-				return;
+                    return;
 
-			}
+                }
 
-                        
+                var img = new Image();
+               
+                img.addEventListener('load', function(e){
 
-                        // send wall post
-			myHttp.sendWallPost(
-                            {
-                                postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
-                                //postTo: '?user',
-                                postTo:get('wall_username').innerHTML,
-                                postType: 'say',
-                                postContent:saying
-                            },
+                    console.log('oh goodie');
+                    console.log(img);
 
-                            // what to do with the response
-                            function(response){
+                // send wall post
+		myHttp.sendWallPost(
+                    {
+                        postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
+                        //postTo: '?user',
+                        postTo:get('wall_username').innerHTML,
+                        postType: 'say',
+                        //postContent:saying
+                        postContent: getImageDataURL(img)
+                    },
 
-                                postType.injectpost_say(response);
+                    // what to do with the response
+                    function(response){
 
-                            }
+                        postType.injectpost_say(response);
 
-                        );
+                    }
+
+                );
+
+                }); // end image load
+               
+                img.src = '/img/no_canvas_one.png';
+
+
             }
 
         });
 
         get('wall_newpost_quickcanvas').addEventListener('click', function(e){
-
-            console.log(this);
-            console.log(e.target.className);
 
            if(e.target.className === 'quickcanvas_button_runkill'){
 
@@ -371,6 +398,9 @@
            }
 
            if(e.target.className === 'quickcanvas_button_post'){
+
+               //var img = new Image();
+               //img.src = '/img/no_canvas_one.png';
 
                // send wall post
 	       myHttp.sendWallPost(
@@ -392,49 +422,3 @@
         });
 
     }());
-
-
-/*
-    // post check thread
-    var postCheck = function(){
-
-        setTimeout(postCheck, 10000);
-
-        // get the newest post id
-        var posts = get('wall_posts'),
-        latestID =  posts.children[0].id.replace(/post_container_/,''),
-        oldestID = posts.children[posts.children.length-1].id.replace(/post_container_/,'');
-        
-        console.log(latestID);
-
-        //console.log('making post request with latest post of _id: ' + latestID);
-
-        myHttp.sendPostCheck(
-            {
-                checkType: 'newposts',
-                forUser: get('wall_username').innerHTML,
-                latestID: latestID,
-                oldestID: oldestID
-            }, 
-            function(res){
-
-                if(res.posts.length > 0 ){
-
-                    console.log('new posts!');
-                    postType.injectpost(res.posts[0]);
-
-                }else{
-
-                    //console.log(res.posts.length);
-
-                }
-
-
-            }
-        );
-
-    };
-
-    postCheck();
-*/
-//}());

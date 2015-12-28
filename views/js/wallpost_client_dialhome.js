@@ -7,6 +7,8 @@
 
         setTimeout(postCheck, 10000);
 
+        console.log('dialing home...');
+
         // get the newest post id
         var posts = get('wall_posts'),
         latestID =  posts.children[0].id.replace(/post_container_/,''),
@@ -23,13 +25,13 @@
 
                 if(res.posts.length > 0 ){
 
-                    console.log('new posts!');
+                    console.log('new posts recived, injecting them...');
+
                     postType.injectpost(res.posts[0]);
 
                 }else{
 
-                    //console.log(res.posts.length);
-
+                    console.log('no new posts.');
                 }
 
 

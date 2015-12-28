@@ -4,6 +4,7 @@ var myHttp = (function(){
     var httpPost = function (header, data, done) {
         var xhr = new XMLHttpRequest();
 
+        // default done callback
         if(done === undefined){
 
             done = function(response){
@@ -15,8 +16,12 @@ var myHttp = (function(){
 
         }
 
-        xhr.open('POST', '');
-        xhr.setRequestHeader(header, JSON.stringify(data));
+        xhr.open('POST', '/wall');
+        // ALERT! we should not be using headers to send data!
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        //xhr.setRequestHeader(header, JSON.stringify(data)); // this should be commited out and eventualy removed
+        xhr.setRequestHeader('scriptbook-post', header); // header should just be used to tell scriptbook what kind of post it is.
+
 
         xhr.onreadystatechange = function () {
 
@@ -28,7 +33,7 @@ var myHttp = (function(){
 
         };
 
-        xhr.send();
+        xhr.send(JSON.stringify(data));
 
     };
 
