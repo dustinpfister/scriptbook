@@ -29,7 +29,7 @@
 
         //return 'the new shit'
 
-        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        return dataURL;//dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
     },
 
     postType = {
@@ -64,6 +64,9 @@
 
     injectpost_quickcanvas : function(response){
 
+        console.log('hello');
+        console.log(response.postContent);
+
         var post_container = document.createElement('div'),
                                 parrent = get('wall_posts');
 
@@ -79,7 +82,7 @@
                              '<div class=\"quickcanvas_icon_large\"><\/div>'+
                              '<div class=\"quickcanvas_icon_small\"><\/div>'+
                              '<div class=\"quickcanvas_content\">'+
-                                 '<textarea class=\"quickcanvas_code\">'+ response.postContent +'<\/textarea>'+
+                                 '<textarea class=\"quickcanvas_code\">'+ response.postContent.code +'<\/textarea>'+
                                  '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+
                              '<\/div>'+
                              '<div class=\"quickcanvas_controls\">'+
@@ -353,12 +356,12 @@
 
                 }
 
-                var img = new Image();
+                //var img = new Image();
                
-                img.addEventListener('load', function(e){
+               // img.addEventListener('load', function(e){
 
-                    console.log('oh goodie');
-                    console.log(img);
+               //     console.log('oh goodie');
+               //     console.log(img);
 
                 // send wall post
 		myHttp.sendWallPost(
@@ -367,8 +370,9 @@
                         //postTo: '?user',
                         postTo:get('wall_username').innerHTML,
                         postType: 'say',
-                        //postContent:saying
-                        postContent: getImageDataURL(img)
+                        // postContent:saying
+                        // postContent: getImageDataURL(img)
+                        postContent: saying
                     },
 
                     // what to do with the response
@@ -380,9 +384,9 @@
 
                 );
 
-                }); // end image load
+               // }); // end image load
                
-                img.src = '/img/no_canvas_one.png';
+              //  img.src = '/img/no_canvas_one.png';
 
 
             }
@@ -402,13 +406,23 @@
                //var img = new Image();
                //img.src = '/img/no_canvas_one.png';
 
+               var img = new Image();
+               var self = this;
+               img.addEventListener('load', function(e){
+
                // send wall post
 	       myHttp.sendWallPost(
                    {
                        postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
                        postTo: get('wall_username').innerHTML,
                        postType: 'quickcanvas',
-                       postContent: this.getElementsByClassName('quickcanvas_code')[0].value
+                       //postContent: getImageDataURL(img)
+                       //postContent: self.getElementsByClassName('quickcanvas_code')[0].value
+                       postContent: {
+                           thum: getImageDataURL(img),
+                           code: self.getElementsByClassName('quickcanvas_code')[0].value
+                       }
+                      
                    },
                    function(response){
 
@@ -416,6 +430,10 @@
 
                    }
                );
+
+               });
+
+               img.src = '/img/no_canvas_one.png';
 
            }
 

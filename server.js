@@ -231,10 +231,10 @@ app.get(/wall(\/.*)?/, function(req, res){
                      if(wallposts[i].postType === 'quickcanvas'){
                          
                         html += '<div class=\"quickcanvas_container\">'+
-                             '<div class=\"quickcanvas_icon_large\"><\/div>'+
+                             '<div class=\"quickcanvas_icon_large\"><img src=\"'+wallposts[i].postContent.thum+'\"><\/div>'+
                              '<div class=\"quickcanvas_icon_small\"><\/div>'+
                              '<div class=\"quickcanvas_content\">'+
-                                 '<textarea class=\"quickcanvas_code\">'+ wallposts[i].postContent +'<\/textarea>'+
+                                 '<textarea class=\"quickcanvas_code\">'+ wallposts[i].postContent.code +'<\/textarea>'+
                                  '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+
                              '<\/div>'+
                              '<div class=\"quickcanvas_controls\">'+
@@ -302,8 +302,6 @@ app.post(/wall(\/.*)?/, function(req,res){
     if(req.get('scriptbook-post') === 'wallpost'){
    // var thePost = JSON.parse(req.get('wallpost'));
     //var postType = 'none';
-
-   console.log('okay yes this is the header now: ' + req.get('wallpost'));
 
     wallpost.postToUserPage(req, function(status, post){
 
