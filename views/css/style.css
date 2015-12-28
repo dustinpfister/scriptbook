@@ -132,6 +132,20 @@ body{
 
 /* quick canvas*/
 
+.quickcanvas_image_large{
+
+    width:320px;
+    height:240px;
+
+}
+
+.quickcanvas_image_small{
+
+    width:64px;
+    height:64px;
+
+}
+
 .quickcanvas_container{
 
 }

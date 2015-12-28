@@ -231,8 +231,8 @@ app.get(/wall(\/.*)?/, function(req, res){
                      if(wallposts[i].postType === 'quickcanvas'){
                          
                         html += '<div class=\"quickcanvas_container\">'+
-                             '<div class=\"quickcanvas_icon_large\"><img src=\"'+wallposts[i].postContent.thum+'\"><\/div>'+
-                             '<div class=\"quickcanvas_icon_small\"><\/div>'+
+                             '<div class=\"quickcanvas_icon_large\"><img class=\"quickcanvas_image_large\" src=\"'+wallposts[i].postContent.thum+'\"><\/div>'+
+                             '<div class=\"quickcanvas_icon_small\"><img class=\"quickcanvas_image_small\" src=\"'+wallposts[i].postContent.thum+'\"><\/div>'+
                              '<div class=\"quickcanvas_content\">'+
                                  '<textarea class=\"quickcanvas_code\">'+ wallposts[i].postContent.code +'<\/textarea>'+
                                  '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+

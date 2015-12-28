@@ -79,8 +79,8 @@
                                     //'<div class="post_say"><p>'+response.postContent+'<\/p><\/div>'
 
                                     '<div class=\"quickcanvas_container\">'+
-                             '<div class=\"quickcanvas_icon_large\"><\/div>'+
-                             '<div class=\"quickcanvas_icon_small\"><\/div>'+
+                             '<div class=\"quickcanvas_icon_large\"><img class=\"quickcanvas_image_large\" src=\"'+response.postContent.thum+'\"><\/div>'+
+                             '<div class=\"quickcanvas_icon_small\"><img class=\"quickcanvas_image_small\" src=\"'+response.postContent.thum+'\"><\/div>'+
                              '<div class=\"quickcanvas_content\">'+
                                  '<textarea class=\"quickcanvas_code\">'+ response.postContent.code +'<\/textarea>'+
                                  '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+
