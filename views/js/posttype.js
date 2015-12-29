@@ -77,7 +77,7 @@ var postType = (function(){
 
                     current.addEventListener('click', function(e){
                         
-                        var action = state.postTypes[pt].onAction[e.target.id];
+                        var action = state.postTypes[pt].onAction[ 'ifID_' + e.target.id ];
 
                         // if there is an action for that id, call it
                         if(action){action();}

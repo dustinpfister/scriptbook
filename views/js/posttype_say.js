@@ -19,13 +19,13 @@ postType.add((function(){
 
             },
 
-            say_input: function(){
+            ifID_say_input: function(){
 
                 console.log('input!')
 
             },
 
-            say_post: function(){
+            ifID_say_post: function(){
          
                 var saying = _.get('say_input').value;
                 
