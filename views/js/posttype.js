@@ -108,6 +108,23 @@ var postType = (function(){
             post_container.className = "post_container";
 
             //post_container.addEventListener('click', postAction);
+            (function(){
+            
+                var pt = response.postType;
+
+                post_container.addEventListener('click', function(e){
+                        
+                    var action = state.postTypes[pt].onAction['ifClass_'+e.target.className];
+
+                    console.log('className: ' + e.target.className);
+
+                    // if there is an action for that id, call it
+                    if(action){action();}
+
+                });
+
+           }());
+
 
             post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"'+response.postOwner + 
                 '\", at = new Date(\"'+ response.postTime +'\"), postType = \"'+response.postType+'\";<\/div>'+

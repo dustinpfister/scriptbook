@@ -13,6 +13,12 @@ postType.add((function(){
         },
         onAction : {
 
+            ifClass_post_container : function(){
+
+                console.log('so this is where you could do somthing for when the post container is clicked');
+
+            },
+
             say_input: function(){
 
                 console.log('input!')
