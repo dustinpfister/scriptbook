@@ -10,6 +10,7 @@ var postType = (function(){
     var state = {
 
         postTypes : {},
+        json:[],
         wallPostContainer: document.body
 
     },
@@ -24,6 +25,8 @@ var postType = (function(){
                         
                 var actionObj = state.postTypes[pt].onAction,
                 action = actionObj[String('ifID_'  +e.target.id)] || actionObj[String('ifClass_'  +e.target.className)] ;
+
+                console.log('action');
 
                 // if there is an action for that id, call it
                 if(action){action();}
@@ -47,6 +50,13 @@ var postType = (function(){
 
         },
 
+        addJSON : function(aurgObj){
+
+            state.json.push(aurgObj);
+            console.log(state.json);
+
+        },
+
         injectInterface: function(container){
 
             var html='';
@@ -55,7 +65,7 @@ var postType = (function(){
             for(var postType in state.postTypes){
 
                 html += '<div data-posttype=\"'+postType+'\" id=\"posttype_interface_'+postType+'\" class=\"posttype_interface\">'+
-                state.postTypes[postType].ui()+
+                state.postTypes[postType].ui(state)+
                 '<\/div>';
 
             }
