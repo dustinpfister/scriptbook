@@ -29,7 +29,7 @@ var postType = (function(){
                 console.log('action');
 
                 // if there is an action for that id, call it
-                if(action){action();}
+                if(action){action(e, this, e.target);}
 
             });
 
