@@ -101,9 +101,9 @@ var postType = (function(){
   
                 post.addEventListener('click', function(e){
                         
-                    var action = state.postTypes[post.dataset.posttype].onAction['ifClass_'+post.className];
+                    var action = state.postTypes[post.dataset.posttype].onAction['ifClass_'+e.target.className];
 
-                    console.log('className: ' + post.className);
+                    console.log('className: ' + e.target.className);
 
                     // if there is an action for that id, call it
                     if(action){action();}
