@@ -187,11 +187,14 @@ app.get(/wall(\/.*)?/, function(req, res){
     // if visiter is logged in
     if(req.user){
         
-        // if username ( /user/username )
-        if(req.url.length > 6){
+        // if username ( /wall/username )
+        //if(req.url.length > 5){
+        if(req.url.length <= 6){
+            username = req.user.name
+        }else{
 
             username = req.url.replace(/\/wall\//,'');
-
+}
             users.findProfile(username, function(err,user){
 
                 // if user found
@@ -279,15 +282,28 @@ app.get(/wall(\/.*)?/, function(req, res){
             });
 
         // if root space ( /wall )    
-        }else{
+        //}else{
 
+
+/*
             users.getUserNames(function(names){
                 res.render('userhome', {
                     username : req.user.name,
                     otherUsers : names
                 });
             });
-        }
+*/
+
+            // for now make it the same thing is visiting your own wall
+/*
+            res.render('userwall', { 
+                     username: req.user.name,
+                     wallusername : user.name,
+                     inject_wall_posts: '<div>why not post something<\/div>' 
+            });
+*/
+
+        //}
 
     }
 
