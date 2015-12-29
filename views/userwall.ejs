@@ -30,105 +30,38 @@
     <!-- the wall -->
     <div id="wall_container">
 
+        <!-- this will hold the main posttype.js interface -->
         <div id="wall_newpost">
-
-            <form>
-
-                <input name="wall_posttype" id="wall_radio_say" value="say" type="radio" checked><span>Say</span>
-                <input name="wall_posttype" id="wall_radio_quick_canvas" value="quickcanvas" type="radio"><span>Quick Canvas</span>
-
-            </form>
-
-            <div id="wall_newpost_say">
-
-                <label>Say:</label>
-                <input class="say_input" type="text" name="say">
-                <input class="say_post" type="submit" value="post">
-
-            </div>
-            
-
-            <div id="wall_newpost_quickcanvas">
-                <div class="quickcanvas_icon_large" style="display:none;"><img  class="quickcanvas_image_large" src="/img/no_canvas_one.png"></div>
-                <div class="quickcanvas_icon_small" style="display:block;"><img class="quickcanvas_image_small" src="/img/no_canvas_one.png"></div>
-                <div class="wall_newpost_quickcanvas_content">
-                    <textarea class="quickcanvas_code">
-// Blank Quick Canvas Template
-
-(function(){
-
-    // get references to the canvas and canvas context
-    var canvas = document.getElementById('quickcanvas_canvas'),
-    context = canvas.getContext('2d'),
-	
-
-    // additional variables that have to do with your quick canvas should go here
-
-
-    // start will be called once before running main loop
-    start = function(){
-
-        loop();
-
-    },
-
-    // what to do on each frame tick
-    update = function(){
-
-        // update your state here
-
-    },
-
-    // what to draw to canvas
-    draw = function(ctx){
-
-        // background
-        ctx.fillStyle='#000000';
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-
-    },
-
-    // main app loop
-    loop = function(){
-
-        requestAnimationFrame(loop);
-
-        update();
-        draw(context);
-
-
-    };
-
-    // start it (click run button to start this demo)
-    start();
-    
-
-}());
-                    </textarea>
-                    <iframe class="quickcanvas_iframe" scrolling="no" seamless="seamless" src="/html/frame_quick_canvas.html"></iframe>
-                </div>
-                <div class="wall_newpost_quickcanvas_controls">
-                    <input class="quickcanvas_button_runkill" type="button" value="RUN">
-                    <input class="quickcanvas_button_post" type="button" value="post">
-                </div>
-            </div>
-
-
-
-
+            <p>loading postype interface...</p>
         </div>
 
         <!-- this will contain the wall posts -->
         <div id="wall_posts">
 
+            <!-- server side starting post injection -->
             <%- inject_wall_posts %>
 
         </div>
 
     </div>
 
+<script src="/js/sb_client_api.js"></script>
 <script src="/js/myhttp.js"></script>
+<script src="/js/posttype.js"></script>
+<script src="/js/posttype_say.js"></script>
+<script>
+
+console.log('i am ready to believe you!');
+
+    postType.injectInterface(document.getElementById('wall_newpost'));
+    postType.setWallPostContainer(document.getElementById('wall_posts'));
+
+</script>
+
+<!--
 <script src="/js/wallpost_client.js"></script>
 <script src="/js/wallpost_client_dialhome.js"></script>
+-->
+
 <!-- the post client system -->
 <!--<script src="/js/post_client.js"></script>-->

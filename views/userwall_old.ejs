@@ -1,0 +1,134 @@
+
+<!-- nav -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">&#60;%= scriptBook %&#62;</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/wall">Wall</a></li>
+                <li><a href="/user">Users</a></li>
+                <li><a href="/search">Search</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<!-- content -->
+<div class="content-container">
+    <p>var youAre = { name: <a href="/"><%= username %></a>, logout: <a href="/logout">logout</a> }</p>
+    <p>var visitingName = &#34;<span id="wall_username"><%= wallusername %></span>&#34;</p>
+
+    <!-- the wall -->
+    <div id="wall_container">
+
+        <div id="wall_newpost">
+
+            <form>
+
+                <input name="wall_posttype" id="wall_radio_say" value="say" type="radio" checked><span>Say</span>
+                <input name="wall_posttype" id="wall_radio_quick_canvas" value="quickcanvas" type="radio"><span>Quick Canvas</span>
+
+            </form>
+
+            <div id="wall_newpost_say">
+
+                <label>Say:</label>
+                <input class="say_input" type="text" name="say">
+                <input class="say_post" type="submit" value="post">
+
+            </div>
+            
+
+            <div id="wall_newpost_quickcanvas">
+                <div class="quickcanvas_icon_large" style="display:none;"><img  class="quickcanvas_image_large" src="/img/no_canvas_one.png"></div>
+                <div class="quickcanvas_icon_small" style="display:block;"><img class="quickcanvas_image_small" src="/img/no_canvas_one.png"></div>
+                <div class="wall_newpost_quickcanvas_content">
+                    <textarea class="quickcanvas_code">
+// Blank Quick Canvas Template
+
+(function(){
+
+    // get references to the canvas and canvas context
+    var canvas = document.getElementById('quickcanvas_canvas'),
+    context = canvas.getContext('2d'),
+	
+
+    // additional variables that have to do with your quick canvas should go here
+
+
+    // start will be called once before running main loop
+    start = function(){
+
+        loop();
+
+    },
+
+    // what to do on each frame tick
+    update = function(){
+
+        // update your state here
+
+    },
+
+    // what to draw to canvas
+    draw = function(ctx){
+
+        // background
+        ctx.fillStyle='#000000';
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    },
+
+    // main app loop
+    loop = function(){
+
+        requestAnimationFrame(loop);
+
+        update();
+        draw(context);
+
+
+    };
+
+    // start it (click run button to start this demo)
+    start();
+    
+
+}());
+                    </textarea>
+                    <iframe class="quickcanvas_iframe" scrolling="no" seamless="seamless" src="/html/frame_quick_canvas.html"></iframe>
+                </div>
+                <div class="wall_newpost_quickcanvas_controls">
+                    <input class="quickcanvas_button_runkill" type="button" value="RUN">
+                    <input class="quickcanvas_button_post" type="button" value="post">
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        <!-- this will contain the wall posts -->
+        <div id="wall_posts">
+
+            <%- inject_wall_posts %>
+
+        </div>
+
+    </div>
+
+<script src="/js/myhttp.js"></script>
+<script src="/js/wallpost_client.js"></script>
+<script src="/js/wallpost_client_dialhome.js"></script>
+<!-- the post client system -->
+<!--<script src="/js/post_client.js"></script>-->
