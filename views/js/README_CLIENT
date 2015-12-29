@@ -1,0 +1,27 @@
+
+POSTTYPE.JS
+
+    posttype.js is a scriptbook front-end for handeling the posting, and injecting of wall posts on the client system. it is part of the wallpost_client front-end collection, and as you would exspect works with the wallpost.js backend.
+
+    
+    * comes with NO BUILT IN postTypes, posttype.js must be extened with at least one plugin (such as posttype_say.js)
+    * generates and injects a user interface that can be used to post to a users wall
+    
+
+    API:
+
+    postType.state
+
+        This is a reference to the inner state object. If you can't work with alything that you should be able to work with via a public method, what you are looking for should be here.
+
+    postType.add(plugin)
+
+        You call this method when writing a plugin. For an example of how to go about writing a plugin for posttype.js take a look at posttype_say.js.
+
+    postType.injectInterface(el)
+
+        Call this method with the given element that will function as a container for the main wallpost user interface.
+
+    postType.setWallPostContainer(el)
+
+        As the name would suggest, use this method to set the container that wall posts are to be injected into.
