@@ -36,6 +36,27 @@ var postType = (function(){
         postTypes : {},
         wallPostContainer: document.body
 
+    },
+
+    setOnAction = function(container){
+
+        (function(){
+  
+            var pt = container.dataset.posttype;
+
+            container.addEventListener('click', function(e){
+                        
+                var action = state.postTypes[pt].onAction['ifClass_'+e.target.className];
+
+                console.log('className: ' + e.target.className);
+
+                // if there is an action for that id, call it
+                if(action){action();}
+
+            });
+
+        }());
+
     };
 
     return {
@@ -96,36 +117,8 @@ var postType = (function(){
             var posts = document.getElementsByClassName('post_container');
             [].forEach.call(posts, function(post){
 
-                //post.addEventListener('click', postAction);
-                (function(){
-  
-                post.addEventListener('click', function(e){
-                        
-                    var action = state.postTypes[post.dataset.posttype].onAction['ifClass_'+e.target.className];
-
-                    console.log('className: ' + e.target.className);
-
-                    // if there is an action for that id, call it
-                    if(action){action();}
-
-                });
-
-/*
-                var pt = response.postType;
-
-                post_container.addEventListener('click', function(e){
-                        
-                    var action = state.postTypes[pt].onAction['ifClass_'+e.target.className];
-
-                    console.log('className: ' + e.target.className);
-
-                    // if there is an action for that id, call it
-                    if(action){action();}
-
-                });
-*/
-           }());
-
+               // set onAction for each server given post
+               setOnAction(post);
 
             });
 
