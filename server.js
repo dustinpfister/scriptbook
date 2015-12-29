@@ -219,7 +219,7 @@ app.get(/wall(\/.*)?/, function(req, res){
                  while(i--){
 
                      // html context that will be in all posts
-                     html += '<div id="post_container_'+wallposts[i]._id+'" class=\"post_container\">'+
+                     html += '<div data-posttype=\"'+wallposts[i].postType+'\" id=\"post_container_'+wallposts[i]._id+'\" class=\"post_container\">'+
                         //' <div class=\"post_info\">'+wallposts[i].postOwner+'<\/div>'
                         ' <div class=\"post_info\"> var fromUser = \"'+wallposts[i].postOwner + '\", at = new Date(\"'+ wallposts[i].postTime +'\")'+
                         ', postType = \"'+wallposts[i].postType+'\";<\/div>';
