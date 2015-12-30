@@ -209,3 +209,17 @@ body{
     margin-left:auto;
     margin-right:auto;
 }
+
+
+/*  NEW POSTTYPE! delete older stuff */
+.posttype_inactive_interface{
+
+    display:none;
+
+}
+
+.posttype_active_interface{
+
+    display:block;
+
+}

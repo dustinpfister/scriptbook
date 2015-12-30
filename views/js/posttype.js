@@ -9,6 +9,7 @@ var postType = (function(){
 
     var state = {
 
+        defaultType: 'say',
         postTypes : {},
         json:[],
         wallPostContainer: document.body
@@ -35,6 +36,20 @@ var postType = (function(){
 
         }());
 
+    },
+
+    setActive = function(postType){
+
+        var active = document.getElementById('posttype_interface_'+postType),
+                
+                oldActive = document.getElementsByClassName('posttype_active_interface');
+                
+                [].forEach.call(oldActive, function(old){
+                    old.className = 'posttype_inactive_interface';
+                });
+
+                active.className = 'posttype_active_interface';
+
     };
 
     return {
@@ -57,28 +72,9 @@ var postType = (function(){
 
         },
 
-        injectInterface: function(container){
+        setWallPostContainer : function(el){
 
-            var html='';
-
-            // comple interface
-            for(var postType in state.postTypes){
-
-                html += '<div data-posttype=\"'+postType+'\" id=\"posttype_interface_'+postType+'\" class=\"posttype_interface\">'+
-                state.postTypes[postType].ui(state)+
-                '<\/div>';
-
-            }
-
-            // inject interface into container
-            container.innerHTML = html;
-
-            // now that we have the html, attach handlers
-            for(var postType in state.postTypes){
-
-               setOnAction(_.get('posttype_interface_'+postType));
-
-            }
+            state.wallPostContainer = el;
 
         },
 
@@ -95,9 +91,41 @@ var postType = (function(){
 
         },
 
-        setWallPostContainer : function(el){
+        injectInterface: function(container){
 
-            state.wallPostContainer = el;
+            var html = '<div id="posttype_typeselect">'+
+                '<input name="posttype_select" id="posttype_radio_say" value="say" type="radio" checked><span>Say</span>'+
+                '<input name="posttype_select" id="posttype_radio_quickcanvas" value="quickcanvas" type="radio"><span>Quick Canvas</span><\/div>';
+
+            // comple interface
+            for(var postType in state.postTypes){
+
+                html += '<div data-posttype=\"'+postType+'\" id=\"posttype_interface_'+postType+'\" class=\"posttype_inactive_interface\">'+
+                state.postTypes[postType].ui(state)+
+                '<\/div>';
+
+            }
+
+            //html += '<\/div>';
+
+            // inject interface into container
+            container.innerHTML = html;
+
+            // now that we have the html, attach handlers
+            for(var postType in state.postTypes){
+
+               setOnAction(_.get('posttype_interface_'+postType));
+
+            }
+
+            // show current posttype interface and hide others
+            _.get('posttype_typeselect').addEventListener('click', function(e){
+
+                setActive(e.target.value);
+
+            });
+
+            setActive(state.defaultType);
 
         },
 

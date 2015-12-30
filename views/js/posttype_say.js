@@ -6,7 +6,7 @@ postType.add((function(){
 
         ui: function(){
 
-            return '<label>Say:</label>'+
+            return  '<label>Say:</label>'+
                 '<input id="say_input" type="text">'+
                 '<input id="say_post" type="submit" value="post">';
 
