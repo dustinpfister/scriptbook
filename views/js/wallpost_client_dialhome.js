@@ -5,7 +5,7 @@
     // post check thread
     var postCheck = function(){
 
-        setTimeout(postCheck, 10000);
+        setTimeout(postCheck, 15000);
 
         console.log('dialing home...');
 
@@ -28,6 +28,7 @@
                     console.log('new posts!');
 
                     //postType.injectpost(res.posts[0]);
+                    postType.injectFromDialHome(res.posts);
 
                 }else{
 

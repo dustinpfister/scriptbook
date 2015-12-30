@@ -101,6 +101,20 @@ var postType = (function(){
 
         },
 
+        injectFromDialHome : function(resStack){
+
+            console.log('injecting response stack from dial home...');
+            console.log(resStack);
+
+            var self = this;
+            resStack.forEach(function(response){
+
+                self.injectPost(response);
+
+            });
+
+        },
+
         injectPost : function(response){
 
             console.log('looking good.');
