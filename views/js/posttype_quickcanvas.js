@@ -185,7 +185,39 @@ postType.add((function(){
             },
 
             // post button
-            ifClass_quickcanvas_button_post: function(){
+            ifClass_quickcanvas_button_post: function(e,post,target){
+
+                var img = new Image();
+                var self = this;
+                img.addEventListener('load', function(e){
+
+                    // send wall post
+	            myHttp.sendWallPost(
+                        {
+                            postOwner: '?user', // if posting from /, both the post owner, and the post page should belong to the logged in user
+                            postTo: _.get('wall_username').innerHTML,
+                            postType: 'quickcanvas',
+                            postContent: {
+                                thum: _.getImageDataURL(img),
+                                code: post.getElementsByClassName('quickcanvas_code')[0].value
+                            }
+                      
+                        },
+                        postType.injectPost
+/*
+                        function(response){
+
+                            postType.injectpost_quickcanvas(response);                         
+
+                        }
+*/
+                   );
+
+               });
+
+               //img.src = '/img/no_canvas_one.png';
+               // ALERT! assuming that img 0 is the large one
+               img.src = post.getElementsByTagName('img')[0].src;
 
             }
 
