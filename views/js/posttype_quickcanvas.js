@@ -153,9 +153,24 @@ postType.add((function(){
 
             },
 
-            ifClass_quickcanvas_image_large: function(){
+            // large icon
+            ifClass_quickcanvas_image_large: function(e,post,target){
 
-                console.log('here i am');
+                quickcanvas.postToggle(post, true);
+
+            },
+
+            // small icon
+            ifClass_quickcanvas_image_small: function(e,post,target){
+
+                quickcanvas.postToggle(post, false);
+
+            },
+
+            // hide button
+            ifClass_quickcanvas_button_hide: function(e,post,target){
+
+                quickcanvas.postToggle(post, false);
 
             },
 
