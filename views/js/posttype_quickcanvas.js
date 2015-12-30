@@ -204,18 +204,11 @@ postType.add((function(){
                       
                         },
                         postType.injectPost
-/*
-                        function(response){
 
-                            postType.injectpost_quickcanvas(response);                         
-
-                        }
-*/
                    );
 
                });
 
-               //img.src = '/img/no_canvas_one.png';
                // ALERT! assuming that img 0 is the large one
                img.src = post.getElementsByTagName('img')[0].src;
 
@@ -223,7 +216,23 @@ postType.add((function(){
 
         },
 
-        postTemplate: function(postContent){ return '<p>blank<\/p>'; }
+        postTemplate: function(postContent){ 
+ 
+            return '<div class=\"quickcanvas_container\">'+
+                '<div class=\"quickcanvas_icon_large\"><img class=\"quickcanvas_image_large\" src=\"'+postContent.thum+'\"><\/div>'+
+                '<div class=\"quickcanvas_icon_small\"><img class=\"quickcanvas_image_small\" src=\"'+postContent.thum+'\"><\/div>'+
+                '<div class=\"quickcanvas_content\">'+
+                    '<textarea class=\"quickcanvas_code\">'+ postContent.code +'<\/textarea>'+
+                    '<iframe class=\"quickcanvas_iframe\" scrolling=\"no\" seamless=\"seamless\" src=\"\/html\/frame_quick_canvas.html\"><\/iframe>'+
+                '<\/div>'+
+                '<div class=\"quickcanvas_controls\">'+
+                    '<input class=\"quickcanvas_button_runkill\" type=\"button\" value=\"RUN\">'+
+                    '<input class=\"quickcanvas_button_hide\" type=\"button\" value=\"hide\">'+
+                '<\/div>'+
+            '<\/div>';
+
+        }
         
-    }
+    };
+
 }()));

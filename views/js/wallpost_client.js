@@ -76,6 +76,7 @@
                          post_container.addEventListener('click', postAction);
 
                                 post_container.innerHTML = ' <div class=\"post_info\"> var fromUser = \"'+response.postOwner + '\", at = new Date(\"'+ response.postTime +'\");<\/div>'+
+
                                     //'<div class="post_say"><p>'+response.postContent+'<\/p><\/div>'
 
                                     '<div class=\"quickcanvas_container\">'+
