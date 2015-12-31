@@ -396,12 +396,20 @@ app.get(/user(\/.*)?/, function(req, res){
         // if root userspace ( /user )    
         }else{
 
+            users.findProfile(req.user.name, function(err,user){
+
             users.getUserNames(function(names){
                 res.render('userhome', {
                     username : req.user.name,
-                    otherUsers : names
+                    otherUsers : names,
+                    id : user.id,
+                    name: user.name,
+                    displayname: user.displayName
                 });
             });
+
+            });
+
         }
 
     }
