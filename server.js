@@ -364,6 +364,44 @@ app.post(/wall(\/.*)?/, function(req,res){
 // the user namespace ( /user /user/ /user/username )
 app.get(/user(\/.*)?/, function(req, res){
 
+    var username = req.user.name;
+
+    if(req.url.length > 6){
+
+        username = req.url.replace(/\/user\//,'');
+
+    }
+
+    users.findProfile(username, function(err,user){
+
+        users.getUserNames(function(names){
+
+            res.render('userhome', {
+
+                username : req.user.name,
+                otherUsers : names,
+
+                id : user.id,
+                name: user.name,
+                displayname: user.displayName
+
+            });
+
+        });
+
+    });
+
+
+});
+app.post(/user(\/.*)?/, function(req, res){
+
+});
+
+
+/*
+// the user namespace ( /user /user/ /user/username )
+app.get(/user(\/.*)?/, function(req, res){
+
     var username;
 
     // if visiter is logged in
@@ -418,6 +456,7 @@ app.get(/user(\/.*)?/, function(req, res){
 app.post(/user(\/.*)?/, function(req, res){
 
 });
+*/
 
 // start the server
 server = app.listen(3000, function () {
