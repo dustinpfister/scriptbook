@@ -164,9 +164,9 @@ app.get('/signup', function(req, res) {
 });
 app.post('/signup', function(req, res) {
 
-    console.log('okay so this is what we get for reg.body here: ' + JSON.stringify(req.body));
-
-    users.createUser(JSON.stringify(req.body));
+    //console.log('okay so this is what we get for reg.body here: ' + JSON.stringify(req.body));
+    
+    users.createUser(req.body);
 
     res.redirect('/login');
 
