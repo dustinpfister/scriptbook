@@ -369,6 +369,9 @@ app.get(/user(\/.*)?/, function(req, res) {
         if(user){
             users.getUserNames(function(names) {
 
+               console.log('what we have here is:');
+               console.log(user.DOB);
+
                 res.render('userhome', {
 
                     username: req.user.name,
@@ -376,7 +379,8 @@ app.get(/user(\/.*)?/, function(req, res) {
 
                     id: user.id,
                     name: user.name,
-                    displayname: user.displayName
+                    displayname: user.displayName,
+                    DOB: user.DOB
 
                 });
 

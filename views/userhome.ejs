@@ -41,7 +41,27 @@
        <li> username: <span> <%= name %> </span>  </li>
        <li> display name: <span> <%= displayname %> </span>  </li>
        <li> id: <span> <%= id %> </span>  </li>
+       <li>DOB: <%= DOB %></li>
+       <li> AGE (in seconds): 
+           <span id="age_start" style="display:none;"><% var str = Math.floor( (new Date() - DOB) / 1000 ) %>  <%= str %></span> 
+           <span id="age_display"></span>
+        </li>
     </ul>
     <p><a href ="/wall/<%= name %>">visit <%= name %>'s wall</a></p>
-
 </div>
+<script>
+
+    var startAge = Number(document.getElementById('age_start').innerHTML),
+    appStart = new Date();
+
+    var age = startAge;    
+    var thread = function(){
+
+        setTimeout(thread, 1000);
+
+        age = startAge + Math.floor( (new Date() - appStart) / 1000 );
+      
+        document.getElementById('age_display').innerHTML = String(age).replace( /(\d)(?=(\d{3})+$)/g , '$1,');
+    };
+    thread();
+</script>
