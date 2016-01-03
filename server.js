@@ -15,6 +15,7 @@ var express = require('express'),
 // followinf example at : https://github.com/passport/express-4.x-local-example/blob/master/server.js
 passport.use(new Strategy(
     function(username, password, cb) {
+
         users.findByUsername(username, function(err, user) {
 
             if (err) {
@@ -35,17 +36,19 @@ passport.serializeUser(function(user, cb) {
 });
 
 passport.deserializeUser(function(id, cb) {
+
     users.findById(id, function(err, user) {
         if (err) {
             return cb(err);
         }
+
         cb(null, user);
     });
 });
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
-app.use(require('morgan')('combined'));
+//app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
 
 app.use(require('body-parser').json({
@@ -55,8 +58,15 @@ app.use(require('body-parser').urlencoded({
     extended: true,
     limit: '5mb'
 }));
+
+/* 
+    ALERT! check out: npmjs.com/package/express-session
+
+    it warns that i will need better session storage
+
+*/
 app.use(require('express-session')({
-    secret: 'keyboard cat',
+    secret: 'keyboard cat', // ALERT! look into express-session and why the secret is important
     resave: false,
     saveUninitialized: false,
     limit: '5mb'
@@ -147,11 +157,17 @@ app.post('/login',
         failureRedirect: '/login'
     }),
     function(req, res) {
+
+        console.log(req.user.name +' loggin!');
+
         res.redirect('/');
     });
 
 // logout namespace
 app.get('/logout', function(req, res) {
+
+    console.log(req.user.name +' log out!');
+
     req.logout();
     res.redirect('/login');
 });
