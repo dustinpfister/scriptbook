@@ -47,6 +47,17 @@
     <ul>
         <li><a href ="/wall/<%= profileUser.name %>">visit <%= profileUser.name %>'s wall</a></li>
         <li>wall visit count: <%= postInfo.wallVisitCount %></li>
+        <li>visitors: 
+
+        <%  
+            var visitors = postInfo.wallVisits[0], 
+            out = '', 
+            len = postInfo.wallVisits.length, 
+            i = len-1; 
+
+           while(i > 0){ out+=postInfo.wallVisits[i].who + ' '; i--; }  
+  
+        %>  <%= out %></li>
     </ul>
 
 </div>
