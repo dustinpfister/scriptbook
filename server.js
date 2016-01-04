@@ -251,7 +251,7 @@ app.get(/wall(\/.*)?/, function(req, res) {
                                 // html context that will be in all posts
                                 html += '<div data-posttype=\"' + wallposts[i].postType + '\" id=\"post_container_' + wallposts[i]._id + '\" class=\"post_container\">' +
                                     //' <div class=\"post_info\">'+wallposts[i].postOwner+'<\/div>'
-                                    ' <div class=\"post_info\"> var fromUser = \"' + wallposts[i].postOwner + '\", at = new Date(\"' + wallposts[i].postTime + '\")' +
+                                    ' <div class=\"post_info\"> var fromUser = \"<a href="/user/'+wallposts[i].postOwner+'">' + wallposts[i].postOwner + '</a>\", at = new Date(\"' + wallposts[i].postTime + '\")' +
                                     ', postType = \"' + wallposts[i].postType + '\";<\/div>';
 
                                 // say post
