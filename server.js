@@ -379,12 +379,14 @@ app.get(/user(\/.*)?/, function(req, res) {
         atHome = false;
     }
 
+    // get the user profile
     users.findProfile(username, function(err, user) {
 
         if(user){
-            users.getUserNames(function(names) {
+            
+            if(atHome){
 
-                if(atHome){
+               users.getUserNames(function(names) {
 
                     res.render('userhome', {
 
@@ -393,21 +395,21 @@ app.get(/user(\/.*)?/, function(req, res) {
 
                     });
 
-               // we are visiting a users profile
-               }else{
+                });
 
-                   res.render('userprofile', {
+           // we are visiting a users profile
+           }else{
 
-                        username: req.user.name,
-                        otherUsers: names,
+               res.render('userprofile', {
 
-                        profileUser : user,
+                   username: req.user.name,
+                    profileUser : user,
 
-                    });
+               });
 
-               }
+           }
 
-            });
+            
         }else{
 
             res.render('usernotfound', {});

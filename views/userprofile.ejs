@@ -26,7 +26,7 @@
 <div class="content-container">
     <p>var youAre = { name: <a href="/user/<%= username %>"><%= username %></a>, logout: <a href="/logout">logout</a> }</p>
 
-<p><%= profileUser.name %>'s Profile:</p>
+    <p><%= profileUser.name %>'s Profile:</p>
      <ul>
        <li> username: <span> <%= profileUser.name %> </span>  </li>
        <li> display name: <span> <%= profileUser.displayName %> </span>  </li>
@@ -38,6 +38,8 @@
         </li>
         <li>admin: <%= profileUser.admin %></li>
     </ul>
+
+    <p><%= profileUser.name %>'s Wall:</p>
     <p><a href ="/wall/<%= profileUser.name %>">visit <%= profileUser.name %>'s wall</a></p>
 
 
