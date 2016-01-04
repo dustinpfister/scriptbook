@@ -234,7 +234,7 @@ app.get(/wall(\/.*)?/, function(req, res) {
                 users.findProfile(username, function(err, user) {
 
                     // do they have posts?
-                    wallpost.getPosts(user.name, function(wallposts) {
+                    wallpost.getPosts(req, user.name, function(wallposts) {
 
                         var len, i, html, currentPost;
 
