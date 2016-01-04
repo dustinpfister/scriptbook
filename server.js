@@ -398,16 +398,22 @@ app.get(/user(\/.*)?/, function(req, res) {
                 });
 
            // we are visiting a users profile
-           }else{
+            }else{
 
-               res.render('userprofile', {
+                wallpost.getPostInfo(user.name, function(postInfo){
+                
+                   res.render('userprofile', {
 
-                   username: req.user.name,
-                    profileUser : user,
+                        username: req.user.name,
+                        profileUser : user,
 
-               });
+                        postInfo : postInfo
 
-           }
+                    });
+
+                });
+
+            }
 
             
         }else{

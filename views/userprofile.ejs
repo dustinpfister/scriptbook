@@ -39,9 +39,11 @@
         <li>admin: <%= profileUser.admin %></li>
     </ul>
 
-    <p><%= profileUser.name %>'s Wall:</p>
-    <p><a href ="/wall/<%= profileUser.name %>">visit <%= profileUser.name %>'s wall</a></p>
-
+    <p><a href="/wall/<%= profileUser.name %>"><%= profileUser.name %>'s wall:</a></p>
+    <ul>
+        <li><a href ="/wall/<%= profileUser.name %>">visit <%= profileUser.name %>'s wall</a></li>
+        <li>wall visit count: <%= postInfo.wallVisitCount %></li>
+    </ul>
 
 </div>
 
