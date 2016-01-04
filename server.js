@@ -384,9 +384,6 @@ app.get(/user(\/.*)?/, function(req, res) {
         if(user){
             users.getUserNames(function(names) {
 
-               console.log('what we have here is:');
-               console.log(user.DOB);
-
                 if(atHome){
                     res.render('userhome', {
 
