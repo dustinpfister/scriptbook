@@ -1,18 +1,16 @@
 var express = require('express'),
-    app = express(),
-    passport = require('passport'),
-    Strategy = require('passport-local').Strategy,
-    expressLayouts = require('express-ejs-layouts'),
+app = express(),
+passport = require('passport'),
+Strategy = require('passport-local').Strategy,
+expressLayouts = require('express-ejs-layouts'),
 
-    users = require('./lib/users.js'),
-    wallpost = require('./lib/wallpost.js'),
+users = require('./lib/users.js'),
+wallpost = require('./lib/wallpost.js'),
 
-    server,
-
-    siteWide = express.Router();
+server;
 
 // use passport local strategy
-// followinf example at : https://github.com/passport/express-4.x-local-example/blob/master/server.js
+// following example at : https://github.com/passport/express-4.x-local-example/blob/master/server.js
 passport.use(new Strategy(
     function(username, password, cb) {
 
