@@ -396,7 +396,8 @@ app.get(/user(\/.*)?/, function(req, res) {
                     id: user.id,
                     name: user.name,
                     displayname: user.displayName,
-                    DOB: user.DOB
+                    DOB: user.DOB,
+                    admin: user.admin
 
                 });
 
