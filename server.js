@@ -385,18 +385,15 @@ app.get(/user(\/.*)?/, function(req, res) {
             users.getUserNames(function(names) {
 
                 if(atHome){
+
                     res.render('userhome', {
 
                         username: req.user.name,
                         otherUsers: names,
 
-                        //id: user.id,
-                        //name: user.name,
-                        //displayname: user.displayName,
-                        //DOB: user.DOB,
-                        //admin: user.admin
-
                     });
+
+               // we are visiting a users profile
                }else{
 
                    res.render('userprofile', {
@@ -404,11 +401,7 @@ app.get(/user(\/.*)?/, function(req, res) {
                         username: req.user.name,
                         otherUsers: names,
 
-                        id: user.id,
-                        name: user.name,
-                        displayname: user.displayName,
-                        DOB: user.DOB,
-                        admin: user.admin
+                        profileUser : user,
 
                     });
 

@@ -26,19 +26,19 @@
 <div class="content-container">
     <p>var youAre = { name: <a href="/user/<%= username %>"><%= username %></a>, logout: <a href="/logout">logout</a> }</p>
 
-<p><%= name %>'s Profile:</p>
+<p><%= profileUser.name %>'s Profile:</p>
      <ul>
-       <li> username: <span> <%= name %> </span>  </li>
-       <li> display name: <span> <%= displayname %> </span>  </li>
-       <li> id: <span> <%= id %> </span>  </li>
-       <li>DOB: <%= DOB %></li>
+       <li> username: <span> <%= profileUser.name %> </span>  </li>
+       <li> display name: <span> <%= profileUser.displayName %> </span>  </li>
+       <li> id: <span> <%= profileUser.id %> </span>  </li>
+       <li>DOB: <%= profileUser.DOB %></li>
        <li> AGE (in seconds): 
-           <span id="age_start" style="display:none;"><% var str = Math.floor( (new Date() - DOB) / 1000 ) %>  <%= str %></span> 
+           <span id="age_start" style="display:none;"><% var str = Math.floor( (new Date() - profileUser.DOB) / 1000 ) %>  <%= str %></span> 
            <span id="age_display"></span>
         </li>
-        <li>admin: <%= admin %></li>
+        <li>admin: <%= profileUser.admin %></li>
     </ul>
-    <p><a href ="/wall/<%= name %>">visit <%= name %>'s wall</a></p>
+    <p><a href ="/wall/<%= profileUser.name %>">visit <%= profileUser.name %>'s wall</a></p>
 
 
 </div>
