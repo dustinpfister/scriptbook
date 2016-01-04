@@ -23,8 +23,12 @@
 </nav>
 
 <div class="content-container">
-    <p>var youAre = { name: <a href="/user/<%= username %>"><%= username %></a>, logout: <a href="/logout">logout</a> }</p>
-    
+    <p>var youAre = { 
+        name: <a href="/user/<%= username %>"><%= username %></a>, 
+        logout: function(){ <a href="/logout">logout();</a> },
+        jumpToYour : [<a href="/">homePage</a>, <a href="/user/<%= username %>">profile</a>, <a href="/wall/<%= username %>">wall</a>] 
+    }</p>
+
     <div id="user_friends_container">
         <p>friendList:</p>
         <div id="user_friends_list">
