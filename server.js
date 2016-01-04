@@ -372,12 +372,13 @@ app.post(/wall(\/.*)?/, function(req, res) {
 // the user namespace ( /user /user/ /user/username )
 app.get(/user(\/.*)?/, function(req, res) {
 
-    var username = req.user.name;
+    var username = req.user.name,
+    atHome = true;
 
     if (req.url.length > 6) {
 
         username = req.url.replace(/\/user\//, '');
-
+        atHome = false;
     }
 
     users.findProfile(username, function(err, user) {
@@ -388,18 +389,35 @@ app.get(/user(\/.*)?/, function(req, res) {
                console.log('what we have here is:');
                console.log(user.DOB);
 
-                res.render('userhome', {
+                if(atHome){
+                    res.render('userhome', {
 
-                    username: req.user.name,
-                    otherUsers: names,
+                        username: req.user.name,
+                        otherUsers: names,
 
-                    id: user.id,
-                    name: user.name,
-                    displayname: user.displayName,
-                    DOB: user.DOB,
-                    admin: user.admin
+                        id: user.id,
+                        name: user.name,
+                        displayname: user.displayName,
+                        DOB: user.DOB,
+                        admin: user.admin
 
-                });
+                    });
+               }else{
+
+                   res.render('userprofile', {
+
+                        username: req.user.name,
+                        otherUsers: names,
+
+                        id: user.id,
+                        name: user.name,
+                        displayname: user.displayName,
+                        DOB: user.DOB,
+                        admin: user.admin
+
+                    });
+
+               }
 
             });
         }else{
