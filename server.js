@@ -393,11 +393,11 @@ app.get(/user(\/.*)?/, function(req, res) {
                         username: req.user.name,
                         otherUsers: names,
 
-                        id: user.id,
-                        name: user.name,
-                        displayname: user.displayName,
-                        DOB: user.DOB,
-                        admin: user.admin
+                        //id: user.id,
+                        //name: user.name,
+                        //displayname: user.displayName,
+                        //DOB: user.DOB,
+                        //admin: user.admin
 
                     });
                }else{
