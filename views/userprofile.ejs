@@ -53,9 +53,12 @@
             var visitors = postInfo.wallVisits[0], 
             out = '', 
             len = postInfo.wallVisits.length, 
-            i = len-1; 
+            i = len-1,
+            end = 0;
 
-           while(i > 0){ out+=postInfo.wallVisits[i].who + ' '; i--; }  
+            if(len > 5){end = len - 6}
+
+           while(i > end){ out+=postInfo.wallVisits[i].who + ' '; i--; }  
   
         %>  <%= out %></li>
     </ul>
