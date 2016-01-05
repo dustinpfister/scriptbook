@@ -36,6 +36,7 @@ passport.serializeUser(function(user, cb) {
 passport.deserializeUser(function(id, cb) {
 
     users.findById(id, function(err, user) {
+
         if (err) {
             return cb(err);
         }
@@ -83,15 +84,14 @@ app.use(express.static('views')); // must do this to get external files
 // Content-Security-Policy
 app.use(function(req, res, next) {
 
-    /*    i have been running into problems with content-Security-Policy when hosting on a local network
-     *    the project seems to work fine in edge, but perhaps becuase of lax security
-     *    hopfully the problem will go away in chrome, and other effected browsers if this gets hosted 
-     *    in a top level domain.
+    /*    FIRST THINGS FIRST! : Make sure you are not running into any simple problem rellating to no-script,
+     *    a simular browser plugin, or any other simple browser propblem. If that is not the case, you might 
+     *    then be dealing with a deeper proplem with CSP.
      */
 
     // trust self at least yes? I would also like inline scripts for now, might change that.
     //res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline' http://192.168.1.235:3000");
-
+    
     //console.log('CSP: ' + res.get("Content-Security-Policy"));
 
     return next();
